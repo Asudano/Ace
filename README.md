@@ -32,3 +32,7 @@ Caeda as a level 5 Dracoknight (promoted from Pegasus Knight), Spd
 12 + (20)*(.85) + 0 + (5)(.85)
 
 The only thing to watch here are that none of the stats go over the caps for that class.
+
+
+################################################
+Testing :  to run full suite of tests run tests.py

@@ -40,11 +40,13 @@ class CharacterData(object):
 			self.rates['Res'] = array[9]
 			pass
 			
-		def printAllData(self):
+		def __str__(self):
+			"""Creates string for GrowthRates object"""
+			rt_str = ''
 			for key in self.rates:
-				print(key)
-				print(self.rates[key])
-			pass
+				rt_str += '\t' + str(key) + ' : '
+				rt_str += str(self.rates[key]) + '\n'
+			return rt_str
 
 	def __init__(self, array):
 		"""Inits CharacterData with name, game_class_options and 
@@ -57,18 +59,17 @@ class CharacterData(object):
 		self.addClassAndGrowthRates(array)
 		pass
 		
-	def printAllData(self):
-		print('Name: ' + self.name)
-		print('Base Class: ' + self.base_class)
-		print('Base Stats: ')
-		print(self.base_stats)
-		''' BIG PROBLEM HERE, CAN'T FIGURE OUT SYNTAX '''
+	def __str__(self):
+		"""Creates string for CharacterData object"""
+		rt_str = ''
+		rt_str += 'Name: ' + str(self.name) + '\n'
+		rt_str += 'Base Class: ' + str(self.base_class) + '\n'
+		rt_str += str(self.base_stats) + '\n'
 		for key in self.game_class_options:
-			print(key)
-			self.game_class_options[key].printAllData()
-		
-		print('\n')
-		pass
+			rt_str += key + '\n'
+			rt_str += str(self.growth_rate_class[key]) + '\n'
+		rt_str += '\n'
+		return rt_str
 		
 	def getName(self):
 		return self.name
