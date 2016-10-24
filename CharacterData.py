@@ -85,6 +85,9 @@ class CharacterData(object):
 		
 	def getBaseStats(self):
 		return self.base_stats
+	
+	def getBaseClass(self):
+		return self.base_class
 		
 	def getGrowthRates(self, class_name):
 		return self.growth_rate_class[class_name].getRates()
