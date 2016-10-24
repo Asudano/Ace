@@ -1,6 +1,6 @@
 from CharacterData import CharacterData
 
-def read_infile(infile):
+def read_infile(filepath):
 	state = 0
 	game_characters = [] # list of characters and their game data
 	max_stats = {} # nested dictionary {class: {stat name: stat}}
@@ -8,6 +8,17 @@ def read_infile(infile):
 	base_classes = [] # list of base classes
 	promoted_classes = [] # list of promoted classes
 	
+	try:
+		infile = open(filepath, "r")
+	except:
+		#TODO: Make a better error handler
+		#print("ERROR")
+		return (game_characters, 
+			max_stats, 
+			promotion_gains, 
+			base_classes, 
+			promoted_classes)
+
 	for line in infile:
 		# separators
 		# Character,Class,HP GR,Str GR,Mag GR,Skl GR,Spd GR,Lck GR,Def GR,Res GR, - characters, their classes, and growth rates
@@ -85,4 +96,5 @@ def read_infile(infile):
 				count += 1
 			game_characters[index].setBaseClassAndStats(array)
 
+	infile.close()
 	return (game_characters, max_stats, promotion_gains, base_classes, promoted_classes)
