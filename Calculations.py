@@ -16,6 +16,7 @@ def math_model(all_characters, max_stats, promotion_gains, base_classes, promote
 	for character in all_characters:
 		if(character.getName() == char):
 			index = count
+			break
 		count += 1
 	if(index == -1):
 		print('Error') #@TODO: some better error messaging here
