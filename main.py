@@ -12,6 +12,7 @@ def main():
 	base_classes.append('Ballistician')
 	base_classes.append('Chameleon')
 	base_classes.append('Manakete')
+	Calculations.math_model(game_characters, max_stats, promotion_gains, base_classes, promoted_classes, 'Caeda', 10, 'Pegasus Knight')
 
 if __name__ == "__main__":
     main()
