@@ -2,18 +2,23 @@ from tkinter import *
 
 
 class Application(Frame):
-
     def __init__(self, master=None):
         Frame.__init__(self, master)
         self.createwidgets()
 
     def level_up(self):
         print("Hello")
-        #TODO: Create Level UP logic
+        # TODO: Create Level UP logic
 
     def browse_char(self):
         print("browse")
-        #TODO: Create browse char logic
+        # TODO: Create browse char logic
+
+    def initilize_stat_labels(self, name, indexX):
+        text_your_stat = Label(self.master, text=name)
+        text_your_stat.grid(row=indexX, column=0)
+        text_expected_stat = Label(self.master, text=name)
+        text_expected_stat.grid(row=indexX, column=4)
 
     def createwidgets(self):
         master = self.master
@@ -38,53 +43,14 @@ class Application(Frame):
         expected_stats_text = Label(master, text="Expected Stats")
         expected_stats_text.grid(row=3, column=4)
 
-        hp_text = Label(master, text="HP")
-        hp_text.grid(row=4, column=0)
-
-        hp_e_text = Label(master, text="HP")
-        hp_e_text.grid(row=4, column=4)
-
-        str_text = Label(master, text="STR")
-        str_text.grid(row=5, column=0)
-
-        str_e_text = Label(master, text="STR")
-        str_e_text.grid(row=5, column=4)
-
-        mag_text = Label(master, text="MAG")
-        mag_text.grid(row=6, column=0)
-
-        mag_e_text = Label(master, text="MAG")
-        mag_e_text.grid(row=6, column=4)
-
-        skl_text = Label(master, text="Skl")
-        skl_text.grid(row=7, column=0)
-
-        skl_e_text = Label(master, text="Skl")
-        skl_e_text.grid(row=7, column=4)
-
-        spd_text = Label(master, text="Spd")
-        spd_text.grid(row=8, column=0)
-
-        spd_e_text = Label(master, text="Spd")
-        spd_e_text.grid(row=8, column=4)
-
-        lck_text = Label(master, text="Lck")
-        lck_text.grid(row=9, column=0)
-
-        lck_e_text = Label(master, text="Lck")
-        lck_e_text.grid(row=9, column=4)
-
-        def_text = Label(master, text="Def")
-        def_text.grid(row=10, column=0)
-
-        def_e_text = Label(master, text="Def")
-        def_e_text.grid(row=10, column=4)
-
-        res_text = Label(master, text="Res")
-        res_text.grid(row=11, column=0)
-
-        res_e_text = Label(master, text="Res")
-        res_e_text.grid(row=11, column=4)
+        self.initilize_stat_labels("HP", 4)
+        self.initilize_stat_labels("STR", 5)
+        self.initilize_stat_labels("MAG", 6)
+        self.initilize_stat_labels("Skl", 7)
+        self.initilize_stat_labels("Spd", 8)
+        self.initilize_stat_labels("Lck", 9)
+        self.initilize_stat_labels("Def", 10)
+        self.initilize_stat_labels("Res", 11)
 
         levelUpCharachter = Button(master, text="Level Up Character", command=self.level_up)
         levelUpCharachter.grid(row=12, column=0, columnspan=2)
