@@ -11,60 +11,55 @@ def math_model(all_characters, max_stats, promotion_gains, base_classes, promote
 	'''
 	
 	expected_stats = []
+	index = -1
+	count = 0
+	for character in all_characters:
+		if(character.get_name() == char):
+			index = count
+			break
+		count += 1
+	if(index == -1):
+		print('Error') #@TODO: some better error messaging here
+	curr_char = all_characters[index]
 	
 	# if character is in a base class
 	if(class_name in base_classes):
-		index = -1
-		count = 0
-		for character in all_characters:
-			if(character.getName() == char):
-				index = count
-			count += 1
-		if(index == -1):
-			print('Error') #@TODO: some better error messaging here
-		curr_char = all_characters[index]
-		level_diff = level - int(curr_char.getBaseLevel())
-		expected_stats = curr_char.getBaseStats()
-		growth_rates = curr_char.getGrowthRates(class_name)		
+		level_diff = level - int(curr_char.get_base_level())
+		expected_stats = curr_char.get_base_stats()
+		growth_rates = curr_char.get_growth_rates(class_name)		
 		for stat in expected_stats:
 			expected_stats[stat] = expected_stats[stat] + level_diff*(float(growth_rates[stat])/100)
 	
 	# if character is in a promoted class
-	'''
-		CORNER CASES NOT YET DEALT WITH: 
-			- Curate/Cleric promoting to Bishop (different base classes, promote to same)
-			- prepromoted characters do not need to add the 20 base levels			
-	'''
-	if(class_name in promoted_classes):
-		# need to figure out base class
-		base_class = ''
-		for b_class in promotion_gains:
-			for promo_class in promotion_gains[b_class]:
-				if(promo_class == class_name):
-					base_class = b_class
-		index = -1
-		count = 0
-		for character in all_characters:
-			if(character.getName() == char):
-				index = count
-			count += 1
-		if(index == -1):
-			print('Error') #@TODO: some better error messaging here
-		curr_char = all_characters[index]
+	
+	# deal with prepromotes
+	if(curr_char.get_base_class() in promoted_classes):
+		level_diff = level - int(curr_char.get_base_level())
+		expected_stats = curr_char.get_base_stats()
+		growth_rates = curr_char.get_growth_rates(curr_char.get_base_class())
+		for stat in expected_stats:
+			expected_stats[stat] = expected_stats[stat] + level_diff*(float(growth_rates[stat])/100)
+			
+	# non-prepromotes
+	elif(class_name in promoted_classes):
+		base_class = curr_char.get_base_class()
+					
 		# add up levels to base level 20
-		level_diff = 20 - int(curr_char.getBaseLevel())
-		base_expected_stats = curr_char.getBaseStats()
-		base_growth_rates = curr_char.getGrowthRates(base_class)
+		level_diff = 20 - int(curr_char.get_base_level())
+		base_expected_stats = curr_char.get_base_stats()
+		base_growth_rates = curr_char.get_growth_rates(base_class)
 		for stat in base_expected_stats:
 			base_expected_stats[stat] = base_expected_stats[stat] + level_diff*(float(base_growth_rates[stat])/100)
 		expected_stats = base_expected_stats
+		
 		# add promotion gains
 		stat_dict = promotion_gains[base_class][class_name]
 		for stat in stat_dict:
 			expected_stats[stat] = expected_stats[stat] + stat_dict[stat]
+			
 		# now do same for levels in promoted class
 		level_diff = level - 1
-		growth_rates = curr_char.getGrowthRates(class_name)
+		growth_rates = curr_char.get_growth_rates(class_name)
 		for stat in expected_stats:
 			expected_stats[stat] = expected_stats[stat] + level_diff*(float(growth_rates[stat])/100)
 			
@@ -74,7 +69,3 @@ def math_model(all_characters, max_stats, promotion_gains, base_classes, promote
 			expected_stats[stat] = max_stats[class_name][stat]
 			
 	print(expected_stats)
-
-
-
-

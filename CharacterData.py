@@ -130,7 +130,8 @@ class CharacterData(object):
 				game_clas_options) onto GrowthRates objects  
 			base_stats: A dictionary mapping stat names to the character's base class stats
 			base_class: The class this character is in when they join in the game
-		"""
+		"""		
+
 		def __init__(self, array):
 			"""Inits CharacterData with name, game_class_options and 
 			growth_rate_class"""
@@ -139,7 +140,7 @@ class CharacterData(object):
 			self.growth_rate_class = {}
 			self.base_stats = {}
 			self.base_class = ""
-			self.addClassAndGrowthRates(array)
+			self.add_class_and_growth_rates(array)
 			pass
 			
 		def __str__(self):
@@ -155,19 +156,22 @@ class CharacterData(object):
 			rt_str += '\n'
 			return rt_str
 			
-		def getName(self):
+		def get_name(self):
 			return self.name
 			
-		def getBaseLevel(self):
+		def get_base_level(self):
 			return self.base_level
 			
-		def getBaseStats(self):
+		def get_base_stats(self):
 			return self.base_stats
+		
+		def get_base_class(self):
+			return self.base_class
 			
-		def getGrowthRates(self, class_name):
-			return self.growth_rate_class[class_name].getRates()
+		def get_growth_rates(self, class_name):
+			return self.growth_rate_class[class_name].get_rates()
 			
-		def setBaseClassAndStats(self, array):
+		def set_base_class_and_stats(self, array):
 			self.base_class = array[1]
 			self.base_level = array[2]
 			array[10] = array[10].strip()
@@ -181,10 +185,10 @@ class CharacterData(object):
 			self.base_stats['Res'] = int(array[10])
 			pass	
 			
-		def addClassAndGrowthRates(self, array):
+		def add_class_and_growth_rates(self, array):
 			self.game_class_options.append(array[1])
 			gr = self.GrowthRates(array)
 			self.growth_rate_class[array[1]] = gr		
 			pass
-		
+			
 		

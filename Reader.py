@@ -47,7 +47,7 @@ def read_infile(filepath):
 			index = -1
 			count = 0
 			for char in game_characters:
-				if(char.getName() == array[0]):
+				if(char.get_name() == array[0]):
 					index = count
 				count += 1
 			# if not, add it
@@ -56,7 +56,7 @@ def read_infile(filepath):
 				game_characters.append(new_char)
 			# otherwise edit it
 			else:
-				game_characters[index].addClassAndGrowthRates(array)
+				game_characters[index].add_class_and_growth_rates(array)
 		elif(state == 2):
 			# start reading in max stats for specific classes
 			class_name = array[0]
@@ -94,10 +94,10 @@ def read_infile(filepath):
 			index = -1
 			count = 0
 			for char in game_characters:
-				if(char.getName() == array[0]):
+				if(char.get_name() == array[0]):
 					index = count
 				count += 1
-			game_characters[index].setBaseClassAndStats(array)
+			game_characters[index].set_base_class_and_stats(array)
 
 	infile.close()
 	return (game_characters, max_stats, promotion_gains, base_classes, promoted_classes)
