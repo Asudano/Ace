@@ -1,6 +1,9 @@
 from CharacterData import CharacterData
 
 def read_infile(filepath):
+	"""
+		DEPRECATED : TO BE MOVED INTO GAMEDATA CLASS
+	"""
 	state = 0
 	game_characters = [] # list of characters and their game data
 	max_stats = {} # nested dictionary {class: {stat name: stat}}
