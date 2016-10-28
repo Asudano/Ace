@@ -62,7 +62,6 @@ class CharacterData(object):
 				self.rates['Lck'] = int(array[7])
 				self.rates['Def'] = int(array[8])
 				self.rates['Res'] = int(array[9])
-				pass
 				
 			def __str__(self):
 				"""Creates string for GrowthRates object"""
@@ -145,7 +144,6 @@ class CharacterData(object):
 			self.base_stats = {}
 			self.base_class = ""
 			self.add_class_and_growth_rates(array)
-			pass
 			
 		def __str__(self):
 			"""Creates string for CharacterData object"""
@@ -187,12 +185,10 @@ class CharacterData(object):
 			self.base_stats['Lck'] = int(array[8])
 			self.base_stats['Def'] = int(array[9])
 			self.base_stats['Res'] = int(array[10])
-			pass	
 			
 		def add_class_and_growth_rates(self, array):
 			self.game_class_options.append(array[1])
 			gr = self.GrowthRates(array)
 			self.growth_rate_class[array[1]] = gr		
-			pass
 			
 		
