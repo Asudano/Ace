@@ -13,7 +13,7 @@ def read_infile(filepath):
 	
 	try:
 		infile = open(filepath, "r")
-	except:
+	except IOError:
 		#TODO: Make a better error handler
 		#print("ERROR")
 		return (game_characters, 

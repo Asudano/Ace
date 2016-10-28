@@ -39,6 +39,8 @@ class CharacterData(object):
 		def rates(self):
 			return self.__rates
 
+		# if False block used to wrap logic that will need to be re-used with 
+		# slight modification as code is re-structured so support new architecture
 		if False:
 			"""
 			GrowthRates wrap a dictioanry of individual growth rates for a given
@@ -118,6 +120,8 @@ class CharacterData(object):
 		"""
 		pass
 
+	# if False block used to wrap logic that will need to be re-used with 
+	# slight modification as code is re-structured so support new architecture
 	if False:
 		"""
 		CharacterData contains constant values set by the game for a character
