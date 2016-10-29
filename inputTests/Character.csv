@@ -1,0 +1,11 @@
+Character,Class,HP GR,Str GR,Mag GR,Skl GR,Spd GR,Lck GR,Def GR,Res GR
+Marth,Lord,80,50,0,40,50,70,20,2
+Frey,Cavalier,80,35,0,55,55,45,20,0
+Frey,Paladin,80,35,0,55,55,45,20,0
+Frey,Dracoknight,70,30,0,50,70,45,15,5
+Gordin,Archer,60,20,0,40,35,40,30,0
+Gordin,Sniper,60,20,0,40,35,40,30,0
+Ogma,General,90,35,0,35,10,40,45,0
+Lena,Cleric,15,0,25,25,20,60,0,50
+Navarre,Cavalier,80,35,0,45,35,40,20,0
+Lena,Bishop,15,0,35,30,20,60,0,40
