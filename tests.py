@@ -18,7 +18,7 @@ class TestReader(unittest.TestCase):
 			max_stats, 
 			promotion_gains, 
 			base_classes, 
-			promoted_classes) = Reader.read_infile("./shadow_dragon.csv")
+			promoted_classes) = GameData.read_infile("./shadow_dragon.csv")
 		number_of_characters = 59
 		number_of_clases = 31
 		number_of_base_classes = 13
