@@ -1,13 +1,13 @@
 from tkinter import *
 
 
-class NewCharachterUI(Frame):
+class updateUi(Frame):
     def __init__(self, master=None):
         Frame.__init__(self, master)
         self.charattribute = []
         self.createwidgets()
 
-    def create(self):
+    def update_f(self):
         pass
 
     def createlabels(self, charachter_name, grideN):
@@ -58,13 +58,13 @@ class NewCharachterUI(Frame):
         self.createlabels("Res", 10)
         self.createtextbox("",10)
 
-        levelUpCharachter = Button(master, text="Create", command=self.create)
-        levelUpCharachter.grid(row=11, column=0, columnspan=2, sticky=E+W)
+        update = Button(master, text="update", command=self.update_f)
+        update.grid(row=11, column=0, columnspan=2, sticky=E+W)
 
 
 
 if __name__ == "__main__":
     root = Tk()
-    app = NewCharachterUI(master=root)
+    app = updateUi(master=root)
     app.mainloop()
     root.destroy()
