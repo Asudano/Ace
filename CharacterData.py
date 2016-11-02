@@ -1,3 +1,4 @@
+from State import State
 class CharacterData(object):
 
 	"""
@@ -13,6 +14,7 @@ class CharacterData(object):
 			first encountered
 	"""
 	
+	
 	class GrowthRates(object):
 		"""
 		GrowthRates wraps a dictionary of growth rates for a given 
@@ -21,6 +23,8 @@ class CharacterData(object):
 		Attributes:
 			__rates : a dict<Stat, float> mapping stats onto their growth rates
 		"""
+		
+		__rates = {}
 
 		def __init__(self, stat_values):
 			"""Inits GrowthRates with rates
@@ -33,11 +37,26 @@ class CharacterData(object):
 			Returns:
 				GrowthRates object
 			"""
-			pass
-
-		@property
-		def rates(self):
-			return self.__rates
+			self.rates = {}
+			self.rates['HP'] = int(stat_values[0])
+			self.rates['Str'] = int(stat_values[1])
+			self.rates['Mag'] = int(stat_values[2])
+			self.rates['Skl'] = int(stat_values[3])
+			self.rates['Spd'] = int(stat_values[4])
+			self.rates['Lck'] = int(stat_values[5])
+			self.rates['Def'] = int(stat_values[6])
+			self.rates['Res'] = int(stat_values[7])
+			
+		def __str__(self):
+			"""Creates string for GrowthRates object"""
+			rt_str = ''
+			for key in self.rates:
+				rt_str += '\t' + str(key) + ' : '
+				rt_str += str(self.rates[key]) + '\n'
+			return rt_str
+			
+		def getRates(self):
+			return self.rates
 
 		# if False block used to wrap logic that will need to be re-used with 
 		# slight modification as code is re-structured so support new architecture
@@ -74,27 +93,39 @@ class CharacterData(object):
 			def getRates(self):
 				return self.rates
 
-
 	def __init__(self, name):
-		"""Inits a CharacterData object 
+		"""Inits GrowthRates with rates"""
+		
+		self.name = name
+		self.game_class_options = []
+		self.growth_rate_class = {}
+		self.base_stats = []	
 
-		Args:
-			name : a str of the character's name
-
-		Returns:
-			CharcterData object
-		"""
+	def get_name(self):
+		return self.name
+		
+	def add_class_and_growth_rates(self, array):
+		self.game_class_options.append(array[0])
+		#print len(array)
+		temp = array[1:9]
+		gr = self.GrowthRates(temp)
+		self.growth_rate_class[array[0]] = gr			
+		
+	def add_base_stats(self, array):
 		pass
-
+	
+	def getRates(self):
+		return self.rates	
+	
 	def add_initial_state(self, state):
 		"""Sets the initial state for CharacterData
 
 		Args:
 			state : State object for character's initial state
 		"""
-		pass
+		self.base_stats.append(state)
 
-	def get_growth_rate(self, game_class):
+	def get_growth_rates(self, game_class):
 		"""Retrieves GrowthRates object for given in game class
 
 		Args:
@@ -103,7 +134,7 @@ class CharacterData(object):
 		Returns:
 			GrowthRates object associated with the desired in game class
 		"""
-		pass
+		return self.growth_rate_class[game_class].rates
 
 	def predict_state(self, level, game_class):
 		"""Creates a state for the average stats for a character with a given 
@@ -118,6 +149,15 @@ class CharacterData(object):
 				given class and level.
 		"""
 		pass
+	
+	def get_base_level(self):
+		return (self.base_stats)[0].level
+		
+	def get_base_stats(self):
+		return (self.base_stats)[0].get_stats()
+	
+	def get_base_class(self):
+		return (self.base_stats)[0].game_class
 
 	# if False block used to wrap logic that will need to be re-used with 
 	# slight modification as code is re-structured so support new architecture
@@ -174,17 +214,8 @@ class CharacterData(object):
 			return self.growth_rate_class[class_name].get_rates()
 			
 		def set_base_class_and_stats(self, array):
-			self.base_class = array[1]
-			self.base_level = array[2]
-			array[10] = array[10].strip()
-			self.base_stats['HP'] = int(array[3])
-			self.base_stats['Str'] = int(array[4])
-			self.base_stats['Mag'] = int(array[5])
-			self.base_stats['Skl'] = int(array[6])
-			self.base_stats['Spd'] = int(array[7])
-			self.base_stats['Lck'] = int(array[8])
-			self.base_stats['Def'] = int(array[9])
-			self.base_stats['Res'] = int(array[10])
+			base_stats = State(array)
+
 			
 		def add_class_and_growth_rates(self, array):
 			self.game_class_options.append(array[1])
