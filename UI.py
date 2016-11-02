@@ -1,3 +1,6 @@
+#This is not in use. This template is being saved but currently this design is not being used.
+
+
 from tkinter import *
 from NewCharachterUi import NewCharachterUI
 
