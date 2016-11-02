@@ -22,12 +22,12 @@ class NewCharacterUi(Frame):
         """
             creates a new CharacterInstance and an initial state based on user data
         """
-        character_data = self.game_data.get_character_data(str(self.charattribute[0].get()))
-        stat_dict = {Stat.HP: int(self.charattribute[3].get()), Stat.Str: int(self.charattribute[4].get()),
-                     Stat.Mag: int(self.charattribute[5].get()), Stat.Skl: int(self.charattribute[6].get()),
-                     Stat.Spd : int(self.charattribute[7].get()), Stat.Lck : int(self.charattribute[8].get()),
-                     Stat.Def : int(self.charattribute[9].get()), Stat.Res : int(self.charattribute[10].get()), }
-        state = State(int(self.charattribute[2].get()), str(self.charattribute[1].get()), stat_dict)
+        character_data = self.game_data.get_character_data(str(self.char_attribute[0].get()))
+        stat_dict = {Stat.HP: int(self.char_attribute[3].get()), Stat.Str: int(self.char_attribute[4].get()),
+                     Stat.Mag: int(self.char_attribute[5].get()), Stat.Skl: int(self.char_attribute[6].get()),
+                     Stat.Spd : int(self.char_attribute[7].get()), Stat.Lck : int(self.char_attribute[8].get()),
+                     Stat.Def : int(self.char_attribute[9].get()), Stat.Res : int(self.char_attribute[10].get()), }
+        state = State(int(self.char_attribute[2].get()), str(self.char_attribute[1].get()), stat_dict)
         char_inst = CharacterInstance(character_data, state)
         self.user_logs.update_logs(char_inst)
 

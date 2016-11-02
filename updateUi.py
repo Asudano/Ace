@@ -7,8 +7,8 @@ from UserLogs import UserLogs
 class UpdateUi(Frame):
     def __init__(self, user_logs, master=None):
         """
-			inits a new UpdateUi object to handle updating of a CharacterInstance with a new state
-		"""
+            inits a new UpdateUi object to handle updating of a CharacterInstance with a new state
+        """
         Frame.__init__(self, master)
         self.char_attribute = []
         self.create_widgets()

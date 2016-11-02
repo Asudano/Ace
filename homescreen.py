@@ -17,13 +17,13 @@ class Application(Frame):
         self.game_data = GameData("shadow_dragon.csv")
         self.user_logs = UserLogs("log.csv")
         self.create_widgets()
-        
+
     def new_character_f(self):
         """
             brings up window to add a new CharacterInstance
         """
         root = Tk()
-        app = NewCharacterUi(self.game_data,self.user_logs, master=root)
+        app = NewCharacterUi(self.game_data, self.user_logs, master=root)
         app.mainloop()
         root.destroy()
 
@@ -45,7 +45,8 @@ class Application(Frame):
         app.mainloop()
         root.destroy()
 
-    def update_f(self):
+    @staticmethod
+    def update_f():
         """
             brings up a window to add a new State to an existing CharacterInstance
         """
@@ -54,7 +55,8 @@ class Application(Frame):
         app.mainloop()
         root.destroy()
 
-    def visualize_progress_f(self):
+    @staticmethod
+    def visualize_progress_f():
         """
             brings up a window to see a graph of the progress of a CharacterInstance throughout all States
         """
@@ -85,7 +87,8 @@ class Application(Frame):
         visualize_progress.grid(row=2, column=0, columnspan=2, sticky=E + W)
 
 
-root = Tk()
-app = Application(master=root)
-app.mainloop()
-root.destroy()
+if __name__ == "__main__":
+    root = Tk()
+    app = Application(master=root)
+    app.mainloop()
+    root.destroy()
