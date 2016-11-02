@@ -7,8 +7,11 @@ from UserLogs import UserLogs
 
 
 
-class NewCharacterUI(Frame):
+class NewCharacterUi(Frame):
     def __init__(self, game_data, user_logs, master=None):
+		"""
+			inits a new NewCharacterUi object to add a new Character to user's saved CharacterInstances
+		"""
         Frame.__init__(self, master)
         self.char_attribute = []
         self.create_widgets()
@@ -16,6 +19,9 @@ class NewCharacterUI(Frame):
         self.user_logs = user_logs
 
     def create(self):
+		"""
+			creates a new CharacterInstance and an initial state based on user data
+		"""
         character_data = self.game_data.get_character_data(str(self.charattribute[0].get()))
         stat_dict = {Stat.HP: int(self.charattribute[3].get()), Stat.Str: int(self.charattribute[4].get()),
                      Stat.Mag: int(self.charattribute[5].get()), Stat.Skl: int(self.charattribute[6].get()),
@@ -26,12 +32,26 @@ class NewCharacterUI(Frame):
         self.user_logs.update_logs(char_inst)
 
 
-    def create_labels(self, charachter_name, grideN):
+    def create_labels(self, character_name, gridN):
+		"""
+			create_labels creates a label for a UI element
+
+			Args:
+				character_name : str that specifies the name of the character
+				gridN : int that specifies the number of rows
+		"""
         master = self.master
-        char_name = Label(master, text=charachter_name)
-        char_name.grid(row=grideN, column=0, columnspan=1, sticky=E + W)
+        char_name = Label(master, text=character_name)
+        char_name.grid(row=gridN, column=0, columnspan=1, sticky=E + W)
 
     def create_text_box(self, attribute, gridN):
+		"""
+			create_textbox creates a text box element
+
+			Args:
+				attribute : str that specifies the attribute for text box
+				gridN : int that specifies number of rows
+		"""
         master = self.master
         textbox = Entry(master)
         textbox.grid(row=gridN, column=1, columnspan=1, sticky=E + W)
@@ -39,6 +59,9 @@ class NewCharacterUI(Frame):
         self.char_attribute.append(textbox)
 
     def create_widgets(self):
+		"""
+			create_widgets creates display elements for update screen
+		"""
         master = self.master
 
         self.create_labels("Character Name", 0)
@@ -82,6 +105,6 @@ if __name__ == "__main__":
     root = Tk()
     game_data = GameData("shadow_dragon.csv")
     user_logs = UserLogs("log.csv")
-    app = NewCharacterUI(game_data, user_logs, master=root)
+    app = NewCharacterUi(game_data, user_logs, master=root)
     app.mainloop()
     root.destroy()

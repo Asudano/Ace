@@ -1,8 +1,12 @@
+# not currently used
 from tkinter import *
 
 
 class MyTeamUi(Frame):
     def __init__(self, master=None):
+		"""
+			inits a new MyTeamUi object to suggest CharacterInstances for the user's team
+		"""
         Frame.__init__(self, master)
         self.createwidgets()
 
