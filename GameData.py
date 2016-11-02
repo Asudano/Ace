@@ -58,7 +58,8 @@ class GameData(object):
 
         for line in infile_name:
             # separators
-            # Character,Class,HP GR,Str GR,Mag GR,Skl GR,Spd GR,Lck GR,Def GR,Res GR, - characters, their classes, and growth rates
+            # Character,Class,HP GR,Str GR,Mag GR,Skl GR,Spd GR,Lck GR,Def GR,Res GR,
+            #  - characters, their classes, and growth rates
             # Class_Max,HP,Str,Mag,Skl,Spd,Lck,Def,Res,, - max stats for specific classes
             # Base_Class,Promoted_Class,HP,Str,Mag,Skl,Spd,Def,Res,, - promotion gains
             # Character_Bases,Class,Level,HP,Str,Mag,Skl,Spd,Lck,Def,Res - character base stats

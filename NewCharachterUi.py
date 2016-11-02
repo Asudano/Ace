@@ -6,31 +6,35 @@ from CharacterInstance import CharacterInstance
 from UserLogs import UserLogs
 
 
-
 class NewCharacterUi(Frame):
     def __init__(self, game_data, user_logs, master=None):
         """
             inits a new NewCharacterUi object to add a new Character to user's saved CharacterInstances
+
+             Attributes:
+                __char_attribute : a list that will hold that entry object to be referency when creating a new
+                character.
+                __game_data : A variable to reference game_data class that was passed into the class
+                __user_logs A variable to reference the user_ogs class
         """
         Frame.__init__(self, master)
-        self.char_attribute = []
+        self.__char_attribute = []
         self.create_widgets()
-        self.game_data = game_data
-        self.user_logs = user_logs
+        self.__game_data = game_data
+        self.__user_logs = user_logs
 
     def create(self):
         """
             creates a new CharacterInstance and an initial state based on user data
         """
-        character_data = self.game_data.get_character_data(str(self.char_attribute[0].get()))
-        stat_dict = {Stat.HP: int(self.char_attribute[3].get()), Stat.Str: int(self.char_attribute[4].get()),
-                     Stat.Mag: int(self.char_attribute[5].get()), Stat.Skl: int(self.char_attribute[6].get()),
-                     Stat.Spd : int(self.char_attribute[7].get()), Stat.Lck : int(self.char_attribute[8].get()),
-                     Stat.Def : int(self.char_attribute[9].get()), Stat.Res : int(self.char_attribute[10].get()), }
-        state = State(int(self.char_attribute[2].get()), str(self.char_attribute[1].get()), stat_dict)
+        character_data = self.__game_data.get_character_data(str(self.__char_attribute[0].get()))
+        stat_dict = {Stat.HP: int(self.__char_attribute[3].get()), Stat.Str: int(self.__char_attribute[4].get()),
+                     Stat.Mag: int(self.__char_attribute[5].get()), Stat.Skl: int(self.__char_attribute[6].get()),
+                     Stat.Spd: int(self.__char_attribute[7].get()), Stat.Lck: int(self.__char_attribute[8].get()),
+                     Stat.Def: int(self.__char_attribute[9].get()), Stat.Res: int(self.__char_attribute[10].get()), }
+        state = State(int(self.__char_attribute[2].get()), str(self.__char_attribute[1].get()), stat_dict)
         char_inst = CharacterInstance(character_data, state)
-        self.user_logs.update_logs(char_inst)
-
+        self.__user_logs.update_logs(char_inst)
 
     def create_labels(self, character_name, gridN):
         """
@@ -38,7 +42,7 @@ class NewCharacterUi(Frame):
 
             Args:
                 character_name : str that specifies the name of the character
-                gridN : int that specifies the number of rows
+                gridN : int that specifies the row to create the label at
         """
         master = self.master
         char_name = Label(master, text=character_name)
@@ -50,7 +54,7 @@ class NewCharacterUi(Frame):
 
             Args:
                 attribute : str that specifies the attribute for text box
-                gridN : int that specifies number of rows
+                gridN : int that specifies the row to create the label at
         """
         master = self.master
         textbox = Entry(master)

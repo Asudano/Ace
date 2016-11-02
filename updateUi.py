@@ -10,23 +10,23 @@ class UpdateUi(Frame):
             inits a new UpdateUi object to handle updating of a CharacterInstance with a new state
         """
         Frame.__init__(self, master)
-        self.char_attribute = []
-        self.create_widgets()
+        self.__char_attribute = []
         self.user_logs = user_logs
+        self.create_widgets()
 
     def update_f(self):
         """
             update_f updates a logged character with a new state given by the user
         """
         # 1. select character instance from UserLogs
-        char_instance = self.user_logs.get_char_instance(str(self.char_attribute[0].get()))
+        char_instance = self.user_logs.get_char_instance(str(self.__char_attribute[0].get()))
 
         # 2. Create new State
-        stat_dict = {Stat.HP: int(self.char_attribute[3].get()), Stat.Str: int(self.char_attribute[4].get()),
-                     Stat.Mag: int(self.char_attribute[5].get()), Stat.Skl: int(self.char_attribute[6].get()),
-                     Stat.Spd: int(self.char_attribute[7].get()), Stat.Lck: int(self.char_attribute[8].get()),
-                     Stat.Def: int(self.char_attribute[9].get()), Stat.Res: int(self.char_attribute[10].get()), }
-        state = State(int(self.char_attribute[2].get()), str(self.char_attribute[1].get()), stat_dict)
+        stat_dict = {Stat.HP: int(self.__char_attribute[3].get()), Stat.Str: int(self.__char_attribute[4].get()),
+                     Stat.Mag: int(self.__char_attribute[5].get()), Stat.Skl: int(self.__char_attribute[6].get()),
+                     Stat.Spd: int(self.__char_attribute[7].get()), Stat.Lck: int(self.__char_attribute[8].get()),
+                     Stat.Def: int(self.__char_attribute[9].get()), Stat.Res: int(self.__char_attribute[10].get()), }
+        state = State(int(self.__char_attribute[2].get()), str(self.__char_attribute[1].get()), stat_dict)
 
         # 3. Add state to character instance
         char_instance.add_new_state(state)
