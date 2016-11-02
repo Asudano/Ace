@@ -1,11 +1,13 @@
 import sys
 from CharacterData import CharacterData
 from GameData import GameData
+from UserLogs import UserLogs
 import Calculations
 # from TrackerEnums import GameClass, GameCharacter
 
 def main():
 	data = GameData("./shadow_dragon.csv")
+	log = UserLogs("./user_log.csv")
 	"""
 	Uncomment for some output demonstrating performance
 	
