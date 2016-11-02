@@ -4,7 +4,7 @@ from StatEnum import Stat
 
 class CompareCharUi(Frame):
     def __init__(self, user_logs, master=None):
-	    """
+        """
             inits a new CompareCharUi object to compare two user-specified characters
         """
         Frame.__init__(self, master)
