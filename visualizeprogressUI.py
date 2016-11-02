@@ -44,8 +44,8 @@ class VisualizeProgressUi(Frame):
 
     def create_widgets(self):
 		"""
-			create_widgets creates display elements for update screen
-		"""
+            create_widgets creates display elements for update screen
+        """
         master = self.master
 
         self.create_labels("Character Name", 0)
