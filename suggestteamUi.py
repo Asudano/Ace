@@ -1,12 +1,12 @@
 from tkinter import *
 from UserLogs import UserLogs
 
-class suggestteamUi(Frame):
+class SuggestTeamUi(Frame):
     def __init__(self, user_logs, master=None):
         Frame.__init__(self, master)
         self.user_logs = user_logs
         self.num_char_inp = Entry(master)
-        self.createwidgets()
+        self.create_widgets()
 
     def suggest_f(self):
         list_char_inst = self.user_logs.recommend_team(int(self.num_char_inp.get()))
@@ -14,7 +14,7 @@ class suggestteamUi(Frame):
             char_inst_label = Label(master, text=list_char_inst[i].name())
             char_inst_label.grid(row=3 + i, column=0, columnspan=1, sticky=E + W)
 
-    def createwidgets(self):
+    def create_widgets(self):
         master = self.master
         num_char = Label(master, text="Number of Charachters")
         num_char.grid(row=0, column=0, columnspan=1, sticky=E + W)
@@ -28,7 +28,7 @@ class suggestteamUi(Frame):
 if __name__ == "__main__":
     root = Tk()
     user_logs = UserLogs("log.csv")
-    app = suggestteamUi(user_logs, master=root)
+    app = SuggestTeamUi(user_logs, master=root)
     app.mainloop()
     root.destroy()
 

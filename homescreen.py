@@ -1,8 +1,8 @@
 from tkinter import *
-from NewCharachterUi import NewCharachterUI
-from compareCharUi import compare_char_Ui
-from suggestteamUi import suggestteamUi
-from updateUi import updateUi
+from NewCharachterUi import NewCharacterUI
+from compareCharUi import CompareCharUi
+from suggestteamUi import SuggestTeamUi
+from updateUi import UpdateUi
 from visualizeprogressUI import visualizeprogressUi
 from GameData import GameData
 from UserLogs import UserLogs
@@ -13,29 +13,29 @@ class Application(Frame):
         Frame.__init__(self, master)
         self.game_data = GameData("shadow_dragon.csv")
         self.user_logs = UserLogs("log.csv")
-        self.createwidgets()
+        self.create_widgets()
 
     def new_character_f(self):
         root = Tk()
-        app = NewCharachterUI(self.game_data,self.user_logs, master=root)
+        app = NewCharacterUI(self.game_data,self.user_logs, master=root)
         app.mainloop()
         root.destroy()
 
     def compare_char_f(self):
         root = Tk()
-        app = compare_char_Ui(self.user_logs, master=root)
+        app = CompareCharUi(self.user_logs, master=root)
         app.mainloop()
         root.destroy()
 
     def suggest_team_f(self):
         root = Tk()
-        app = suggestteamUi(self.user_logs, master=root)
+        app = SuggestTeamUi(self.user_logs, master=root)
         app.mainloop()
         root.destroy()
 
     def update_f(self):
         root = Tk()
-        app = updateUi(master=root)
+        app = UpdateUi(master=root)
         app.mainloop()
         root.destroy()
 
@@ -45,7 +45,7 @@ class Application(Frame):
         app.mainloop()
         root.destroy()
 
-    def createwidgets(self):
+    def create_widgets(self):
         master = self.master
 
         browse_character = Button(master, text="New Characters", command=self.new_character_f)
