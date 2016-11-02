@@ -1,5 +1,3 @@
-from StatEnum import Stat
-from GameData import GameData
 class UserLogs(object):
 	"""
 	UserLogs stores all the CharacterLogs that have been entered by the player
@@ -14,7 +12,7 @@ class UserLogs(object):
 	"""
 	def __init__(self, infile_name):
 		"""Inits UserLogs object 
-		
+			
 		Reads player logs from .csv file
 
 		Args:
@@ -23,73 +21,7 @@ class UserLogs(object):
 		Returns:
 			UserLogs object
 		"""
-		
-		self.log_file = infile_name
-		try:
-			infile = open(infile_name, "r")
-		except IOError:
-			#TODO: Make a better error handler
-			#print("ERROR")
-			return (game_characters, 
-		                max_stats, 
-		                promotion_gains, 
-		                base_classes, 
-		                promoted_classes)	
-		"""
-		
-		__level : An int describing the character's current level
-		__game_class : A str describing the character's current in game class
-		__stats : A dict<Stat, float> mapping the elements of the Stat enum onto 
-			the values the character currently has for each stat
-		
-		"""
-		write_line = ""
-		count = 0
-		name = ""
-		inst_class = ""
-		inst_level = 0
-		inst_stats = {}
-		
-		#dict<Stat, float> 		
-		
-		for line in infile:
-                        
-			if count % 9 == 0:
-				name = line
-				#name
-			elif count % 9 == 1:
-				#class
-				inst_class = line
-			elif count % 9 == 2:
-				#level
-				inst_level = line
-			elif count % 9 == 3:
-				#stats
-				inst_stats[Stat.HP] = float(line)
-			elif count % 9 == 4:
-				inst_stats[Stat.Str] = float(line)
-			elif count % 9 == 5:
-				inst_stats[Stat.Mag] = float(line)
-			elif count % 9 == 6:
-				inst_stats[Stat.Skl] = float(line)
-			elif count % 9 == 7:
-				inst_stats[Stat.Spd] = float(line)
-			elif count % 9 == 8:
-				inst_stats[Stat.Def] = float(line)
-			elif count % 9 == 0:
-				inst_stats[Stat.Res] = float(line)
-				new_state = State(inst_level, inst_class, inst_stats)
-				c_data = CharacterData.get_character_data(name)
-				c_inst = CharacterInstance(c_data, new_state)
-				self.character_instances.append(c_inst)
-				name = ""
-				inst_class = ""
-				inst_level = 0
-				inst_stats = {}				
-			count += 1
-			
-			
-						
+		pass
 
 	def update_logs(new_character_instance):
 		"""Updates logs with new CharacterInstance
@@ -97,34 +29,7 @@ class UserLogs(object):
 		Updates UserLogs object and writes data to __log_file as a 
 			CharacterInstance object is updated
 		"""
-
-		try:
-			outfile = open(self.log_file, "a")
-		except IOError:
-			#TODO: Make a better error handler
-			#print("ERROR")
-			return (game_characters, 
-		                max_stats, 
-		                promotion_gains, 
-		                base_classes, 
-		                promoted_classes)
-	
-		# write name, characterdata, states
-		
-		new_name = new_character_instance.character_data.get_name()
-		new_level = (new_character_instance.states)[0].level
-		outfile.write(new_name)
-		outfile.write(new_level)
-		
-		new_stats = (new_character_instance.states)[0].stats
-		keys = new_stats.keys()		
-		count = 0
-		for stats_values in new_stats.values():
-			outfile.write(keys[count])
-			outfile.write(stats_values)
-			count += 1
-
-		
+		pass
 		
 	def sort_by_stat_sum(char_1, char_2):
 		"""Comparator for list of CharacterInstances
@@ -149,9 +54,9 @@ class UserLogs(object):
 			sum_1 += stats_1[stat]
 		for stat in stats_2:
 			sum_2 += stats_2[stat]
-		if(sum_1 < sum_2):
+		if(sum_1 < sum_2)
 			return -1
-		elif(sum_1 > sum_2):
+		elif(sum_1 > sum_2)
 			return 1
 		return 0
 		

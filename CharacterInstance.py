@@ -22,8 +22,7 @@ class CharacterInstance(object):
 		Returns:
 			CharacterInstance object
 		"""
-		self.character_data = character_data
-		self.states.append(initial_state)
+		pass
 
 	def add_new_state(self, state):
 		"""Adds a new State to __states
