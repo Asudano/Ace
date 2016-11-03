@@ -8,6 +8,9 @@ class UserLogs(object):
 		player and stored in a .csv file.
 
 	Attributes:
+		__character_instances : a dict<str, CharacterInstance> mapping names
+			onto CharacterInstance objects
+
 		__character_instances : a list<CharacterInstance> storing all
 			CharacterInstance objects created by the user
 		__log_file : file object describing location logs are stored
@@ -23,7 +26,7 @@ class UserLogs(object):
 		Returns:
 			UserLogs object
 		"""
-		self.character_instances = []
+		self.__character_instances = {}
 
 		self.log_file = infile_name
 		infile = ''
@@ -76,11 +79,20 @@ class UserLogs(object):
 			elif count % 9 == 0:
 				inst_stats[Stat.Res] = float(line)
 				new_state = State(inst_level, inst_class, inst_stats)
-				c_data = game_data.get_character_data(name)
-				c_inst = CharacterInstance(c_data, new_state)
-				print (c_data)
-				print (c_inst)
-				self.character_instances.append(c_inst)
+				##################################################
+				if name in __character_instances.keys():
+					self.__character_instances[name].add_new_state(new_state)
+				else:
+					c_data = game_data.get_character_data(name)
+					c_inst = CharacterInstance(c_data, new_state)
+					self.__character_instances[name] = c_inst
+
+				##################################################
+				#c_data = game_data.get_character_data(name)
+				#c_inst = CharacterInstance(c_data, new_state)
+				#print (c_data)
+				#print (c_inst)
+				#self.character_instances.append(c_inst)
 				name = ""
 				inst_class = ""
 				inst_level = 0
@@ -88,9 +100,13 @@ class UserLogs(object):
 			count += 1
 		print (self.character_instances)
 
-	def add_character_instance(self, new_char_inst):
-		self.character_instances.append(new_char_inst)
+	#def add_character_instance(self, new_char_inst):
+	#	self.character_instances.append(new_char_inst)
 		
+	def get_char_instance(self, name):
+		#TODO docstring
+		return self.__character_instances[name]
+
 	def update_logs(self, new_character_instance):
 		"""Updates logs with new CharacterInstance
 		@@ -29,7 +97,34 @@ class UserLogs(object):
@@ -113,24 +129,29 @@ class UserLogs(object):
 					base_classes,
 					promoted_classes)
 
+		####################################################
+		self.__character_instances[new_character_instance.name] = new_character_instance
+		####################################################
+
+
 		# write name, characterdata, states
 		
 		# print out all CharacterInstance objects with each state
 		# name, class, level, stats
-		for char in self.character_instances:
+		for char in self.__character_instances:
 			for state in char.get_all_states():
 				outfile.write(char.name + '\n')
 				outfile.write(state.game_class + '\n')
 				outfile.write(str(state.level) + '\n')
 				#for stat in state.get_stats():
-				outfile.write(str(state.get_stat_value('HP')) + '\n')
-				'''outfile.write(str(state.get_stats()['Str']) + '\n')
-				outfile.write(str(state.get_stats()['Mag']) + '\n')
-				outfile.write(str(state.get_stats()['Skl']) + '\n')
-				outfile.write(str(state.get_stats()['Spd']) + '\n')
-				outfile.write(str(state.get_stats()['Lck']) + '\n')
-				outfile.write(str(state.get_stats()['Def']) + '\n')
-				outfile.write(str(state.get_stats()['Res']) + '\n')'''
+				outfile.write(str(state.get_stat_value(Stat.HP)) + '\n')
+				outfile.write(str(state.get_stats()[Stat.Str]) + '\n')
+				outfile.write(str(state.get_stats()[Stat.Mag]) + '\n')
+				outfile.write(str(state.get_stats()[Stat.Skl]) + '\n')
+				outfile.write(str(state.get_stats()[Stat.Spd]) + '\n')
+				outfile.write(str(state.get_stats()[Stat.Lck]) + '\n')
+				outfile.write(str(state.get_stats()[Stat.Def]) + '\n')
+				outfile.write(str(state.get_stats()[Stat.Res]) + '\n')
 		
 		'''
 		new_name = new_character_instance.name
