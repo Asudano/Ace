@@ -2,8 +2,7 @@ from State import State
 
 
 class CharacterData(object):
-    """
-    CharacterData contains constant values set by the game for a character
+    """Contains constant values set by the game for a character
 
     Attributes:
         __name : a str giving the character's name
@@ -30,9 +29,6 @@ class CharacterData(object):
             Args:
                 rates : a dict<Stat, float> mapping stats onto their
                     growth rates
-
-            Returns:
-                GrowthRates object
             """
             self.__rates = rates
         @property
@@ -40,7 +36,11 @@ class CharacterData(object):
             return self.__rates
 
     def __init__(self, name):
-        """Inits GrowthRates with rates"""
+        """Inits CharacterData with name
+
+        Args:
+            name : a str describing the name of the character
+        """
 
         self.__name = name
         self.__game_class_options = []
@@ -76,7 +76,7 @@ class CharacterData(object):
 
     def predict_state(self, level, game_class):
         """Creates a state for the average stats for a character with a given
-            in game class and level
+        in game class and level
 
         Args:
             level : an int representing an in game level
@@ -84,7 +84,7 @@ class CharacterData(object):
 
         Returns:
             A state object representing the average for this character at the
-                given class and level.
+            given class and level.
         """
         pass
 
@@ -98,15 +98,14 @@ class CharacterData(object):
         return (self.__base_stats)[0].game_class
 
     def add_class_and_growth_rates(self, game_class, rates):
-        """
-            Adds a potential class and the associated growth rates to
+        """Adds a potential class and the associated growth rates to
 
-            Args:
-                game_class : a str describing a game class this character can
-                    become
-                rates : a dict<Stat, float> mapping in game stats onto the
-                    growth rates for that stat when this character is of the 
-                    class specified by game_class
+        Args:
+            game_class : a str describing a game class this character can
+                become
+            rates : a dict<Stat, float> mapping in game stats onto the
+                growth rates for that stat when this character is of the 
+                class specified by game_class
         """
         self.__game_class_options.append(game_class)
         self.__growth_rate_class = self.GrowthRates(rates)

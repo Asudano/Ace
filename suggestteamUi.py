@@ -2,17 +2,16 @@ from tkinter import *
 from UserLogs import UserLogs
 
 class SuggestTeamUi(Frame):
-	"""
-		SuggestTeamUi manages the team suggestion screen
+	"""Manages the team suggestion screen
 	"""
 
 	def __init__(self, user_logs, master=None):
-		"""
-			inits a new SuggestTeamUi object to suggest a team of CharacterInstances for a user
+		"""inits a new SuggestTeamUi object to suggest a team of 
+		CharacterInstances for a user
 
-			Args:
-				user_logs : the UserLogs singleton
-				master : tkinter.widget identifying the parent widget
+		Args:
+		    user_logs : the UserLogs singleton
+		    master : tkinter.widget identifying the parent widget
 		"""
 		Frame.__init__(self, master)
 		self.__user_logs = user_logs
@@ -20,22 +19,22 @@ class SuggestTeamUi(Frame):
 		self.create_widgets()
 
 	def suggest_f(self):
-		"""
-			suggest_f suggests a team based on the highest sum of scores in the most recent State and 
-				displays the names
+		"""Suggests a team based on the highest sum of scores in the 
+		most recent State and displays the names
 		"""
 		master = self.master
-		list_char_inst = self.__user_logs.recommend_team(int(self.__num_char_inp.get()))
+		list_char_inst = self.__user_logs.recommend_team(int(
+		        self.__num_char_inp.get()))
 		for i in range(0, len(list_char_inst)):
 			char_inst_label = Label(master, text=list_char_inst[i])
-			char_inst_label.grid(row=3+i, column=0, columnspan=1, sticky=E+W)
-		"""for i in range(0, int(self.__num_char_inp.get()) - 1):
-			char_inst_label = Label(master, text=list_char_inst[i].name())
-			char_inst_label.grid(row=3 + i, column=0, columnspan=1, sticky=E + W)"""
+			char_inst_label.grid(
+			        row=3+i, 
+			        column=0, 
+			        columnspan=1, 
+			        sticky=E+W)
 
 	def create_widgets(self):
-		"""
-			create_widgets creates display elements for update screen
+		"""Creates display elements
 		"""
 		master = self.master
 		num_char = Label(master, text="Number of Charachters")

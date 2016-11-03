@@ -4,31 +4,31 @@ import StatEnum
 
 
 class GameData(object):
-	"""
-	GameData stores constraints defined by the game itself and not by the
-		Player.
+	"""GameData stores constraints defined by the game itself and not by the
+	Player.
 
-	GameData is a singleton class that stores values that are read from a .csv
-		file and used to model characters in our tracker.
+	GameData is a singleton class that stores values that are read from a 
+	.csv file and used to model characters in our tracker.
 
 	Attributes:
-		__game_characters : a dict<str, CharacterData> mapping character names
-			onto CharacterData objects. This contains all usable characters in
-			the game
-		__max_stats : a dict<str, dict<Stat, int>> which defines a mapping
-			from a class name onto a mapping between the various stats defined
-			in the game and the maximum values a character of the define class
-			can have
-			Ex: __max_stats["A"][HP] = 50 means that a character of class A can
-				have an HP that is <= 50
-		__base_classes : a list<str> containing all base classes defined in the
-			game
-		__promoted_classes: a list<str> containing all promoted classes defined
-			in the game
-		__promotion_gains : a dict<(str, str), dict<Stat, int>> that maps a
-			tuple of a base class and a promoted class onto a dictionary
-			containing the stat increases/decreases a character is affected by
-			when promoting from the base class to the promoted class
+	    __game_characters : a dict<str, CharacterData> mapping character 
+	        names onto CharacterData objects. This contains all usable 
+		characters in the game
+		__max_stats : a dict<str, dict<Stat, int>> which defines a 
+		    mapping from a class name onto a mapping between the various
+		    stats defined in the game and the maximum values a character
+		    of the define class can have
+		    Ex: __max_stats["A"][HP] = 50 means that a character of 
+		        class A can have an HP that is <= 50
+		__base_classes : a list<str> containing all base classes defined
+		    in the game
+		__promoted_classes: a list<str> containing all promoted classes 
+		    defined in the game
+		__promotion_gains : a dict<(str, str), dict<Stat, int>> that 
+		    maps a tuple of a base class and a promoted class onto a 
+		    dictionary containing the stat increases/decreases a 
+		    character is affected by when promoting from the base class 
+		    to the promoted class
 	"""
 
 	def __init__(self, infile_name):
@@ -37,10 +37,8 @@ class GameData(object):
 		Reads game constraints from .csv file
 
 		Args:
-			infile_name : a str defining the name of the file to read from
-
-		Returns:
-			GameData object
+	            infile_name : a str defining the name of the file to read 
+		        from
 		"""
 		self.__game_characters = {}
 		self.__max_stats = {}
@@ -58,11 +56,15 @@ class GameData(object):
 
 		for line in infile:
 			# separators
-			# Character,Class,HP GR,Str GR,Mag GR,Skl GR,Spd GR,Lck GR,Def GR,Res GR,
+			# Character,Class,HP GR,Str GR,Mag GR,Skl GR,Spd GR,
+			# Lck GR,Def GR,Res GR,
 			#  - characters, their classes, and growth rates
-			# Class_Max,HP,Str,Mag,Skl,Spd,Lck,Def,Res,, - max stats for specific classes
-			# Base_Class,Promoted_Class,HP,Str,Mag,Skl,Spd,Def,Res,, - promotion gains
-			# Character_Bases,Class,Level,HP,Str,Mag,Skl,Spd,Lck,Def,Res - character base stats
+			# Class_Max,HP,Str,Mag,Skl,Spd,Lck,Def,Res,, 
+			# - max stats for specific classes
+			# Base_Class,Promoted_Class,HP,Str,Mag,Skl,Spd,Def,Res,, 
+			# - promotion gains
+			# Character_Bases,Class,Level,HP,Str,Mag,Skl,Spd,Lck,
+			# Def,Res - character base stats
 			array = line.split(',')
 			if (array[0] == 'Character'):
 				state = 1
@@ -79,7 +81,8 @@ class GameData(object):
 
 			if (state == 1):
 				# start reading in characters and growth rates
-				# name, class, HP, Str, Mag, Skl, Spd, Lck, Def, Res
+				# name, class, HP, Str, Mag, Skl, Spd, Lck, Def, 
+				# Res
 				if array[0] in self.__game_characters.keys():
 					self.__game_characters[array[0]].add_class_and_growth_rates(
 						array[1],
@@ -89,7 +92,6 @@ class GameData(object):
 					new_char.add_class_and_growth_rates(
 						array[1],
 						StatEnum.stat_dict(array[2:]))
-					#self.__game_characters.append(new_char)
 					self.__game_characters[array[0]] = new_char
 			elif (state == 2):
 				# start reading in max stats for specific classes
@@ -100,7 +102,8 @@ class GameData(object):
 				# start reading in promotion gains
 				base_class_name = array[0]
 				if (base_class_name not in self.__base_classes):
-					self.__base_classes.append(base_class_name)
+					self.__base_classes.append(
+					        base_class_name)
 				promo_class_name = array[1]
 				if (promo_class_name not in self.__promoted_classes):
 					self.__promoted_classes.append(promo_class_name)
@@ -119,10 +122,12 @@ class GameData(object):
 		"""Retrieves a CharacterData object with __name == name
 
 		Args:
-			name : a str with the name of the character we wish to retrieve
+		    name : a str with the name of the character we wish to 
+		        retrieve
 
 		Returns:
-			CharacterData object from __game_characters with __name == name
+		    CharacterData object from __game_characters with 
+		        __name == name
 		"""
 		return self.__game_characters[name]
 
@@ -130,26 +135,26 @@ class GameData(object):
 		"""Retrieves max stats for a given class
 
 		Args:
-			game_class : a str with the name of an in game class we want the
-				max_stats for
+		    game_class : a str with the name of an in game class we want
+		        the max_stats for
 
 		Returns:
-			dict<Stat, int> describing the max value for each stat for a
-				character with the in game class of game_class
+		    dict<Stat, int> describing the max value for each stat for a
+			character with the in game class of game_class
 		"""
 		return self.__max_stats[game_class]
 
 	def promotion_gains(self, base_class, promoted_class):
-		"""Retrieves the promotion gains/losses associated with promotion from
-			base_class to promoted_class
+		"""Retrieves the promotion gains/losses associated with 
+		    promotion from base_class to promoted_class
 
 		Args:
-			base_class : a str with name of the base class
-			promoted_class : a str with name of the class to promote to
+		    base_class : a str with name of the base class
+		    promoted_class : a str with name of the class to promote to
 
 		Returns:
-			a dict<Stat, int> describing gains/losses from a character
-				promoting from base_class to promoted_class if possible
+		    a dict<Stat, int> describing gains/losses from a character
+		    promoting from base_class to promoted_class if possible
 		"""
 		return self.__promotion_gains[(base_class, promoted_class)]
 
@@ -157,10 +162,10 @@ class GameData(object):
 		"""Determines if a class is a valid base class
 
 		Args:
-			game_class : a str with name of a class
+		    game_class : a str with name of a class
 
 		Returns:
-			a bool describing whether game_class is in __base_classes
+		    a bool describing whether game_class is in __base_classes
 		"""
 		return game_class in self.__base_classes
 
@@ -168,9 +173,9 @@ class GameData(object):
 		"""Determines if a class is a valid promoted classe
 
 		Args:
-			game_class : a str with name of a class
+		    game_class : a str with name of a class
 
 		Returns:
-			a bool describing whether game_class is in __promoted_classes
+		    a bool describing whether game_class is in __promoted_classes
 		"""
 		return game_class in self.__promoted_classes

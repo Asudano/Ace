@@ -7,25 +7,23 @@ from UserLogs import UserLogs
 
 
 class NewCharacterUi(Frame):
+	"""Manages the New Character creation screen
 
-	"""
-		NewCharacterUi manages the New Character creation screen
-
-		Attributes:
-				__char_attribute : a list<str> that contains the entry objects
-					to be referency when creating a new character.
-				__game_data : the GameData singleton
-				__user_logs : the UserLogs singleton
+	Attributes:
+	    __char_attribute : a list<str> that contains the entry objects to be
+	        referency when creating a new character.
+	    __game_data : the GameData singleton
+	    __user_logs : the UserLogs singleton
 	"""
 
 	def __init__(self, game_data, user_logs, master=None):
-		"""
-			inits a new NewCharacterUi object to add a new Character to user's saved CharacterInstances
+		"""inits a new NewCharacterUi object to add a new Character to 
+		user's saved CharacterInstances
 
-			 Args:
-			 	game_data : the GameData singleton
-			 	user_logs : the UserLogs singleton
-			 	master : tkinter.widget identifying the parent widget
+		Args:
+		    game_data : the GameData singleton
+		    user_logs : the UserLogs singleton
+		    master : tkinter.widget identifying the parent widget
 		"""
 		Frame.__init__(self, master)
 		self.__char_attribute = []
@@ -34,38 +32,42 @@ class NewCharacterUi(Frame):
 		self.__user_logs = user_logs
 
 	def create(self):
+		"""Creates a new CharacterInstance and an initial state based on
+		user data
 		"""
-			creates a new CharacterInstance and an initial state based on user data
-		"""
-		character_data = self.__game_data.get_character_data(str(self.__char_attribute[0].get()))
-		stat_dict = {Stat.HP: int(self.__char_attribute[3].get()), Stat.Str: int(self.__char_attribute[4].get()),
-					 Stat.Mag: int(self.__char_attribute[5].get()), Stat.Skl: int(self.__char_attribute[6].get()),
-					 Stat.Spd: int(self.__char_attribute[7].get()), Stat.Lck: int(self.__char_attribute[8].get()),
-					 Stat.Def: int(self.__char_attribute[9].get()), Stat.Res: int(self.__char_attribute[10].get()), }
-		state = State(int(self.__char_attribute[2].get()), str(self.__char_attribute[1].get()), stat_dict)
+		character_data = self.__game_data.get_character_data(str(
+		        self.__char_attribute[0].get()))
+		stat_dict = {Stat.HP: int(self.__char_attribute[3].get()), 
+		             Stat.Str: int(self.__char_attribute[4].get()),
+		             Stat.Mag: int(self.__char_attribute[5].get()), 
+		             Stat.Skl: int(self.__char_attribute[6].get()),
+		             Stat.Spd: int(self.__char_attribute[7].get()), 
+		             Stat.Lck: int(self.__char_attribute[8].get()),
+		             Stat.Def: int(self.__char_attribute[9].get()), 
+		             Stat.Res: int(self.__char_attribute[10].get()), }
+		state = State(int(self.__char_attribute[2].get()), 
+		              str(self.__char_attribute[1].get()), stat_dict)
 		char_inst = CharacterInstance(character_data, state)
-		#self.__user_logs.add_character_instance(char_inst)
 		self.__user_logs.update_logs(char_inst)
 
 	def create_labels(self, character_name, gridN):
-		"""
-			create_labels creates a label for a UI element
+		"""Creates a label for a UI element
 
-			Args:
-				character_name : str that specifies the name of the character
-				gridN : int that specifies the row to create the label at
+		Args:
+		    character_name : str that specifies the name of the 
+		        character
+		    gridN : int that specifies the row to create the label at
 		"""
 		master = self.master
 		char_name = Label(master, text=character_name)
 		char_name.grid(row=gridN, column=0, columnspan=1, sticky=E + W)
 
 	def create_text_box(self, attribute, gridN):
-		"""
-			create_textbox creates a text box element
+		"""Creates a text box element
 
-			Args:
-				attribute : str that specifies the attribute for text box
-				gridN : int that specifies the row to create the label at
+		Args:
+		    attribute : str that specifies the attribute for text box
+		    gridN : int that specifies the row to create the label at
 		"""
 		master = self.master
 		textbox = Entry(master)
@@ -74,8 +76,7 @@ class NewCharacterUi(Frame):
 		self.__char_attribute.append(textbox)
 
 	def create_widgets(self):
-		"""
-			create_widgets creates display elements for update screen
+		"""Creates display elements
 		"""
 		master = self.master
 
@@ -112,8 +113,12 @@ class NewCharacterUi(Frame):
 		self.create_labels("Res", 10)
 		self.create_text_box("", 10)
 
-		level_up_character = Button(master, text="Create", command=self.create)
-		level_up_character.grid(row=11, column=0, columnspan=2, sticky=E + W)
+		level_up_character = Button(master, text="Create", 
+		                            command=self.create)
+		level_up_character.grid(row=11, 
+		                        column=0, 
+		                        columnspan=2, 
+		                        sticky=E + W)
 
 
 if __name__ == "__main__":
