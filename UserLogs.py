@@ -1,4 +1,6 @@
 from StatEnum import Stat
+from State import State
+from CharacterInstance import CharacterInstance
 
 class UserLogs(object):
 	"""
@@ -54,33 +56,36 @@ class UserLogs(object):
 		# dict<Stat, float>
 
 		for line in infile:
-			if count % 9 == 0:
+			line = line.strip()
+			if count % 11 == 0:
 				name = line
 			# name
-			elif count % 9 == 1:
+			elif count % 11 == 1:
 				# class
 				inst_class = line
-			elif count % 9 == 2:
+			elif count % 11 == 2:
 				# level
 				inst_level = line
-			elif count % 9 == 3:
+			elif count % 11 == 3:
 				# stats
 				inst_stats[Stat.HP] = float(line)
-			elif count % 9 == 4:
+			elif count % 11 == 4:
 				inst_stats[Stat.Str] = float(line)
-			elif count % 9 == 5:
+			elif count % 11 == 5:
 				inst_stats[Stat.Mag] = float(line)
-			elif count % 9 == 6:
+			elif count % 11 == 6:
 				inst_stats[Stat.Skl] = float(line)
-			elif count % 9 == 7:
+			elif count % 11 == 7:
 				inst_stats[Stat.Spd] = float(line)
-			elif count % 9 == 8:
+			elif count % 11 == 8:
+				inst_stats[Stat.Lck] = float(line)
+			elif count % 11 == 9:
 				inst_stats[Stat.Def] = float(line)
-			elif count % 9 == 0:
+			elif count % 11 == 10:
 				inst_stats[Stat.Res] = float(line)
 				new_state = State(inst_level, inst_class, inst_stats)
 				##################################################
-				if name in __character_instances.keys():
+				if name in self.__character_instances.keys():
 					self.__character_instances[name].add_new_state(new_state)
 				else:
 					c_data = game_data.get_character_data(name)
@@ -98,7 +103,7 @@ class UserLogs(object):
 				inst_level = 0
 				inst_stats = {}
 			count += 1
-		print (self.character_instances)
+		#print (self.character_instances)
 
 	#def add_character_instance(self, new_char_inst):
 	#	self.character_instances.append(new_char_inst)
@@ -119,7 +124,7 @@ class UserLogs(object):
 		outfile = ''
 		
 		try:
-			outfile = open(self.log_file, "a")
+			outfile = open(self.log_file, 'w')
 		except IOError:
 			# TODO: Make a better error handler
 			# print("ERROR")
@@ -139,19 +144,18 @@ class UserLogs(object):
 		# print out all CharacterInstance objects with each state
 		# name, class, level, stats
 		for char in self.__character_instances:
-			for state in char.get_all_states():
-				outfile.write(char.name + '\n')
+			for state in self.__character_instances[char].get_all_states():
+				outfile.write(self.__character_instances[char].name + '\n')
 				outfile.write(state.game_class + '\n')
 				outfile.write(str(state.level) + '\n')
-				#for stat in state.get_stats():
 				outfile.write(str(state.get_stat_value(Stat.HP)) + '\n')
-				outfile.write(str(state.get_stats()[Stat.Str]) + '\n')
-				outfile.write(str(state.get_stats()[Stat.Mag]) + '\n')
-				outfile.write(str(state.get_stats()[Stat.Skl]) + '\n')
-				outfile.write(str(state.get_stats()[Stat.Spd]) + '\n')
-				outfile.write(str(state.get_stats()[Stat.Lck]) + '\n')
-				outfile.write(str(state.get_stats()[Stat.Def]) + '\n')
-				outfile.write(str(state.get_stats()[Stat.Res]) + '\n')
+				outfile.write(str(state.get_stat_value(Stat.Str)) + '\n')
+				outfile.write(str(state.get_stat_value(Stat.Mag)) + '\n')
+				outfile.write(str(state.get_stat_value(Stat.Skl)) + '\n')
+				outfile.write(str(state.get_stat_value(Stat.Spd)) + '\n')
+				outfile.write(str(state.get_stat_value(Stat.Lck)) + '\n')
+				outfile.write(str(state.get_stat_value(Stat.Def)) + '\n')
+				outfile.write(str(state.get_stat_value(Stat.Res)) + '\n')
 		
 		'''
 		new_name = new_character_instance.name

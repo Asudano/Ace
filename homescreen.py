@@ -45,13 +45,12 @@ class Application(Frame):
         app.mainloop()
         root.destroy()
 
-    @staticmethod
-    def update_f():
+    def update_f(self):
         """
             brings up a window to add a new State to an existing CharacterInstance
         """
         root = Tk()
-        app = UpdateUi(master=root)
+        app = UpdateUi(self.user_logs, master=root)
         app.mainloop()
         root.destroy()
 

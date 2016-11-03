@@ -34,7 +34,7 @@ class NewCharacterUi(Frame):
 					 Stat.Def: int(self.__char_attribute[9].get()), Stat.Res: int(self.__char_attribute[10].get()), }
 		state = State(int(self.__char_attribute[2].get()), str(self.__char_attribute[1].get()), stat_dict)
 		char_inst = CharacterInstance(character_data, state)
-		self.__user_logs.add_character_instance(char_inst)
+		#self.__user_logs.add_character_instance(char_inst)
 		self.__user_logs.update_logs(char_inst)
 
 	def create_labels(self, character_name, gridN):
