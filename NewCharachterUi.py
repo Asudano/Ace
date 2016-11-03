@@ -60,7 +60,7 @@ class NewCharacterUi(Frame):
         textbox = Entry(master)
         textbox.grid(row=gridN, column=1, columnspan=1, sticky=E + W)
         textbox.insert(0, attribute)
-        self.char_attribute.append(textbox)
+        self.__char_attribute.append(textbox)
 
     def create_widgets(self):
         """
