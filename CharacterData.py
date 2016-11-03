@@ -2,8 +2,7 @@ from State import State
 
 
 class CharacterData(object):
-    """
-    CharacterData contains constant values set by the game for a character
+    """Contains constant values set by the game for a character
 
     Attributes:
         __name : a str giving the character's name
@@ -30,9 +29,6 @@ class CharacterData(object):
             Args:
                 rates : a dict<Stat, float> mapping stats onto their
                     growth rates
-
-            Returns:
-                GrowthRates object
             """
             self.__rates = rates
         @property
@@ -40,7 +36,11 @@ class CharacterData(object):
             return self.__rates
 
     def __init__(self, name):
-        """Inits GrowthRates with rates"""
+        """Inits CharacterData with name
+
+        Args:
+            name : a str describing the name of the character
+        """
 
         self.__name = name
         self.__game_class_options = []
@@ -50,9 +50,6 @@ class CharacterData(object):
     @property
     def name(self):
         return self.__name
-
-    def add_base_stats(self, array):
-        pass
 
     @property
     def rates(self):
@@ -64,7 +61,7 @@ class CharacterData(object):
         Args:
             state : State object for character's initial state
         """
-        self.base_stats.append(state)
+        self.__base_stats.append(state)
 
     def get_growth_rates(self, game_class):
         """Retrieves GrowthRates object for given in game class
@@ -75,11 +72,11 @@ class CharacterData(object):
         Returns:
             GrowthRates object associated with the desired in game class
         """
-        return self.growth_rate_class[game_class].rates
+        return self.__growth_rate_class[game_class].rates
 
     def predict_state(self, level, game_class):
         """Creates a state for the average stats for a character with a given
-            in game class and level
+        in game class and level
 
         Args:
             level : an int representing an in game level
@@ -87,20 +84,28 @@ class CharacterData(object):
 
         Returns:
             A state object representing the average for this character at the
-                given class and level.
+            given class and level.
         """
         pass
 
     def get_base_level(self):
-        return (self.base_stats)[0].level
+        return (self.__base_stats)[0].level
 
     def get_base_stats(self):
-        return (self.base_stats)[0].get_stats()
+        return (self.__base_stats)[0].get_stats()
 
     def get_base_class(self):
-        return (self.base_stats)[0].game_class
+        return (self.__base_stats)[0].game_class
 
     def add_class_and_growth_rates(self, game_class, rates):
-        # TOOD: doctstring
+        """Adds a potential class and the associated growth rates to
+
+        Args:
+            game_class : a str describing a game class this character can
+                become
+            rates : a dict<Stat, float> mapping in game stats onto the
+                growth rates for that stat when this character is of the 
+                class specified by game_class
+        """
         self.__game_class_options.append(game_class)
         self.__growth_rate_class = self.GrowthRates(rates)

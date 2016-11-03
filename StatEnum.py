@@ -1,6 +1,8 @@
 from enum import Enum
 
 class Stat(Enum):
+	"""Enum for the stats that describe a game character
+	"""
 	HP = 0
 	Str = 1
 	Mag = 2
@@ -11,7 +13,12 @@ class Stat(Enum):
 	Res = 7
 
 def stat_dict(array):
-	# TODO: Add doc string
+	"""Creates a dictionary mapping Stats onto values
+	
+	Args:
+	    array : a list<float> providing values for the dict in the order
+	    [HP, Str, Mag, Skl, SPd, Lck, Def, Res]
+	"""
 	d = {}
 	d[Stat.HP] = int(array[0])
 	d[Stat.Str] = int(array[1])

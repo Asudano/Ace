@@ -2,24 +2,30 @@ from tkinter import *
 
 
 class VisualizeProgressUi(Frame):
-    def __init__(self, master=None):
-        """
-            inits a new VisualizeProgressUi object to show a CharacterInstance's progress throughout multiple states
+    """Manages the progress visualization screen
+    """
 
+    def __init__(self, master=None):
+        """inits a new VisualizeProgressUi object to show a 
+        CharacterInstance's progress throughout multiple states
+
+        Args:
+            master : tkinter.widget identifying the parent widget
         """
         Frame.__init__(self, master)
         self.char_attribute = []
         self.create_widgets()
 
     def visualize_f(self):
-        """
-            visualize_f shows a graph of the CharacterInstance's States over time vs. the predicted states
+        """Creates a graph for character growth visualization
+        
+        Creats a grapoh of the CharacterInstance's Statses over time vs.
+        predicted States
         """
         pass
 
     def create_labels(self, character_name, gridN):
-        """
-            create_labels creates a label for a UI element
+        """Creates labels for UI elements
 
         Args:
             character_name : str that specifies the name of the character
@@ -31,12 +37,11 @@ class VisualizeProgressUi(Frame):
         self.char_attribute.append(char_name)
 
     def create_textbox(self, attribute, gridN):
-        """
-            create_textbox creates a text box element
+        """Creates a text box element
 
-            Args:
-                attribute : str that specifies the attribute for text box
-                gridN : int that specifies number of rows
+        Args:
+            attribute : str that specifies the attribute for text box
+            gridN : int that specifies number of rows
         """
         master = self.master
         textbox = Entry(master)
@@ -44,8 +49,7 @@ class VisualizeProgressUi(Frame):
         textbox.insert(0, attribute)
 
     def create_widgets(self):
-        """
-            create_widgets creates display elements for update screen
+        """Creates display elements
         """
         master = self.master
 
@@ -54,7 +58,17 @@ class VisualizeProgressUi(Frame):
 
         stat_var = StringVar(master)
         stat_var.set("HP")
-        stat_var_drop = OptionMenu(master, stat_var, "HP", "Str", "Mag", "Skl", "Spd", "Lck", "Def", "Res")
+        stat_var_drop = OptionMenu(
+            master, 
+            stat_var, 
+            "HP", 
+            "Str", 
+            "Mag", 
+            "Skl", 
+            "Spd", 
+            "Lck", 
+            "Def", 
+            "Res")
         stat_var_drop.grid(row=1, column=0, columnspan=2, sticky=E + W)
 
         visualize = Button(master, text="Visualize", command=self.visualize_f)
