@@ -1,3 +1,5 @@
+from StatEnum import Stat
+
 class UserLogs(object):
 	"""
 	UserLogs stores all the CharacterLogs that have been entered by the player
@@ -10,26 +12,141 @@ class UserLogs(object):
 			CharacterInstance objects created by the user
 		__log_file : file object describing location logs are stored
 	"""
-	def __init__(self, infile_name):
+	def __init__(self, infile_name, game_data):
 		"""Inits UserLogs object
+
 
 		Reads player logs from .csv file
 
 		Args:
-			infile_name : a str defining the name of the file to read from
 
 		Returns:
 			UserLogs object
 		"""
-		pass
+		self.character_instances = []
 
-	def update_logs(new_character_instance):
+		self.log_file = infile_name
+		infile = ''
+		try:
+			infile = open(infile_name, "r")
+		except IOError:
+			# TODO: Make a better error handler
+			print("ERROR")
+
+		"""
+
+		__level : An int describing the character's current level
+		__game_class : A str describing the character's current in game class
+		__stats : A dict<Stat, float> mapping the elements of the Stat enum onto
+			the values the character currently has for each stat
+
+		"""
+		write_line = ""
+		count = 0
+		name = ""
+		inst_class = ""
+		inst_level = 0
+		inst_stats = {}
+
+		# dict<Stat, float>
+
+		for line in infile:
+			if count % 9 == 0:
+				name = line
+			# name
+			elif count % 9 == 1:
+				# class
+				inst_class = line
+			elif count % 9 == 2:
+				# level
+				inst_level = line
+			elif count % 9 == 3:
+				# stats
+				inst_stats[Stat.HP] = float(line)
+			elif count % 9 == 4:
+				inst_stats[Stat.Str] = float(line)
+			elif count % 9 == 5:
+				inst_stats[Stat.Mag] = float(line)
+			elif count % 9 == 6:
+				inst_stats[Stat.Skl] = float(line)
+			elif count % 9 == 7:
+				inst_stats[Stat.Spd] = float(line)
+			elif count % 9 == 8:
+				inst_stats[Stat.Def] = float(line)
+			elif count % 9 == 0:
+				inst_stats[Stat.Res] = float(line)
+				new_state = State(inst_level, inst_class, inst_stats)
+				c_data = game_data.get_character_data(name)
+				c_inst = CharacterInstance(c_data, new_state)
+				print (c_data)
+				print (c_inst)
+				self.character_instances.append(c_inst)
+				name = ""
+				inst_class = ""
+				inst_level = 0
+				inst_stats = {}
+			count += 1
+		print (self.character_instances)
+
+	def add_character_instance(self, new_char_inst):
+		self.character_instances.append(new_char_inst)
+		
+	def update_logs(self, new_character_instance):
 		"""Updates logs with new CharacterInstance
-
+		@@ -29,7 +97,34 @@ class UserLogs(object):
 		Updates UserLogs object and writes data to __log_file as a
 			CharacterInstance object is updated
 		"""
-		pass
+		"""
+			Rewrites character instances and states to log
+		"""
+		outfile = ''
+		
+		try:
+			outfile = open(self.log_file, "a")
+		except IOError:
+			# TODO: Make a better error handler
+			# print("ERROR")
+			return (game_characters,
+					max_stats,
+					promotion_gains,
+					base_classes,
+					promoted_classes)
+
+		# write name, characterdata, states
+		
+		# print out all CharacterInstance objects with each state
+		# name, class, level, stats
+		for char in self.character_instances:
+			for state in char.get_all_states():
+				outfile.write(char.name + '\n')
+				outfile.write(state.game_class + '\n')
+				outfile.write(str(state.level) + '\n')
+				#for stat in state.get_stats():
+				outfile.write(str(state.get_stat_value('HP')) + '\n')
+				'''outfile.write(str(state.get_stats()['Str']) + '\n')
+				outfile.write(str(state.get_stats()['Mag']) + '\n')
+				outfile.write(str(state.get_stats()['Skl']) + '\n')
+				outfile.write(str(state.get_stats()['Spd']) + '\n')
+				outfile.write(str(state.get_stats()['Lck']) + '\n')
+				outfile.write(str(state.get_stats()['Def']) + '\n')
+				outfile.write(str(state.get_stats()['Res']) + '\n')'''
+		
+		'''
+		new_name = new_character_instance.name
+		new_level = (new_character_instance.get_all_states())[0].level
+		print(new_level)
+		outfile.write(new_name)
+		outfile.write(new_level)
+
+		new_stats = (new_character_instance.states)[0].stats
+		keys = new_stats.keys()
+		count = 0
+		for stats_values in new_stats.values():
+			outfile.write(keys[count])
+			outfile.write(stats_values)
+			count += 1
+		'''
 
 	def sort_by_stat_sum(char_1, char_2):
 		"""Comparator for list of CharacterInstances
@@ -54,9 +171,9 @@ class UserLogs(object):
 			sum_1 += stats_1[stat]
 		for stat in stats_2:
 			sum_2 += stats_2[stat]
-		if(sum_1 < sum_2)
+		if(sum_1 < sum_2):
 			return -1
-		elif(sum_1 > sum_2)
+		elif(sum_1 > sum_2):
 			return 1
 		return 0
 

@@ -64,7 +64,7 @@ class CharacterData(object):
         Args:
             state : State object for character's initial state
         """
-        self.base_stats.append(state)
+        self.__base_stats.append(state)
 
     def get_growth_rates(self, game_class):
         """Retrieves GrowthRates object for given in game class
@@ -75,7 +75,7 @@ class CharacterData(object):
         Returns:
             GrowthRates object associated with the desired in game class
         """
-        return self.growth_rate_class[game_class].rates
+        return self.__growth_rate_class[game_class].rates
 
     def predict_state(self, level, game_class):
         """Creates a state for the average stats for a character with a given
@@ -92,13 +92,13 @@ class CharacterData(object):
         pass
 
     def get_base_level(self):
-        return (self.base_stats)[0].level
+        return (self.__base_stats)[0].level
 
     def get_base_stats(self):
-        return (self.base_stats)[0].get_stats()
+        return (self.__base_stats)[0].get_stats()
 
     def get_base_class(self):
-        return (self.base_stats)[0].game_class
+        return (self.__base_stats)[0].game_class
 
     def add_class_and_growth_rates(self, game_class, rates):
         # TOOD: doctstring

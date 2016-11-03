@@ -15,7 +15,7 @@ class Application(Frame):
         """
         Frame.__init__(self, master)
         self.game_data = GameData("shadow_dragon.csv")
-        self.user_logs = UserLogs("log.csv")
+        self.user_logs = UserLogs("user_log.csv", self.game_data)
         self.create_widgets()
 
     def new_character_f(self):
