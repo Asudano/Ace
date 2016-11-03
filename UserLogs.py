@@ -12,9 +12,6 @@ class UserLogs(object):
 	Attributes:
 		__character_instances : a dict<str, CharacterInstance> mapping names
 			onto CharacterInstance objects
-
-		__character_instances : a list<CharacterInstance> storing all
-			CharacterInstance objects created by the user
 		__log_file : file object describing location logs are stored
 	"""
 	def __init__(self, infile_name, game_data):
@@ -202,7 +199,7 @@ class UserLogs(object):
 			return 1
 		return 0
 
-	def recommend_team(num_characters):
+	def recommend_team(self, num_characters):
 		"""Recommends a team for the user
 
 		Uses sorted list of CharacterInstances to determine characters with
@@ -211,10 +208,36 @@ class UserLogs(object):
 		Args:
 			num_characters : number of CharacterInstances to choose
 
-		Returns: List of top num_characters CharacterInstances to use
+		Returns: List of top num_characters name strings to use
 		"""
-		sorted_characters = sorted(self.__character_instances, cmp=sort_by_stat_sum)
+		"""sorted_characters = sorted(self.__character_instances, cmp=sort_by_stat_sum)
 		best_characters = []
 		for i in range(0,num_characters):
 			best_characters.append(sorted_characters[i])
-		return best_characters		
+		return best_characters	"""
+		"""sorted_characters = sorted(self.__character_instances, cmp=sort_by_stat_sum)
+		best_characters = []
+		for i in range(0,num_characters):
+			best_characters.append(sorted_characters[i])"""
+		# comparator being annoying, so here's a terrible temporary fix
+		sum_name = {}
+		for char in self.__character_instances:
+			state = self.__character_instances[char].get_current_state()
+			sum = 0
+			sum += state.get_stat_value(Stat.HP)
+			sum += state.get_stat_value(Stat.Str)
+			sum += state.get_stat_value(Stat.Mag)
+			sum += state.get_stat_value(Stat.Skl)
+			sum += state.get_stat_value(Stat.Spd)
+			sum += state.get_stat_value(Stat.Lck)
+			sum += state.get_stat_value(Stat.Def)
+			sum += state.get_stat_value(Stat.Res)
+			sum_name[sum] = self.__character_instances[char].name
+		all_sums = []
+		for key in sum_name:
+			all_sums.append(key)
+		all_sums.sort(reverse=True)
+		best_characters = []
+		for i in range(0, num_characters):
+			best_characters.append(sum_name[all_sums[i]])	
+		return best_characters

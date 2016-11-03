@@ -6,9 +6,18 @@ from GameData import GameData
 
 
 class UpdateUi(Frame):
+	"""
+        Update Ui manages the character update scren
+    """
+
 	def __init__(self, user_logs, master=None):
 		"""
-			inits a new UpdateUi object to handle updating of a CharacterInstance with a new state
+			inits a new UpdateUi object to handle updating of a 
+				CharacterInstance with a new state
+
+			Args:
+				user_logs : the UserLogs singleton
+				master : tkinter.widget identifying the parent widget
 		"""
 		Frame.__init__(self, master)
 		self.__char_attribute = []
@@ -17,7 +26,8 @@ class UpdateUi(Frame):
 
 	def update_f(self):
 		"""
-			update_f updates a logged character with a new state given by the user
+			update_f updates a logged character with a new state given by the
+				user
 		"""
 		# 1. select character instance from UserLogs
 		print(self.__char_attribute[0].get())
@@ -103,7 +113,6 @@ class UpdateUi(Frame):
 
 		update = Button(master, text="update", command=self.update_f)
 		update.grid(row=11, column=0, columnspan=2, sticky=E + W)
-
 
 if __name__ == "__main__":
 	root = Tk()

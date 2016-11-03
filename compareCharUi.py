@@ -3,16 +3,24 @@ from UserLogs import UserLogs
 from StatEnum import Stat
 
 class CompareCharUi(Frame):
+	"""
+		CompareCharUi manages the UI for the character comparison screen.
+	"""
+
 	def __init__(self, user_logs, master=None):
 		"""
 			inits a new CompareCharUi object to compare two user-specified characters
+
+			Args:
+				user_logs : UserLogs variable containing user data
+				master : tkinter.widget identifying the parent widget
 		"""
 		Frame.__init__(self, master)
 		self.char_attribute = []
 		self.user_logs = user_logs
 		self.create_widgets()
 
-	def create_labels(self, character_name, gridN, colN):
+	def create_labels(self, character_name, grideN, colN):
 		"""
 			create_labels creates a label for a UI element
 
@@ -23,7 +31,7 @@ class CompareCharUi(Frame):
 		"""
 		master = self.master
 		char_name = Label(master, text=character_name)
-		char_name.grid(row=gridN, column=0, columnspan=1)#, sticky=E + W)
+		char_name.grid(row=grideN, column=0, columnspan=1, sticky=E + W)
 
 	def create_text_box(self, attribute, gridN):
 		"""

@@ -51,9 +51,6 @@ class CharacterData(object):
     def name(self):
         return self.__name
 
-    def add_base_stats(self, array):
-        pass
-
     @property
     def rates(self):
         return self.__rates
@@ -101,6 +98,15 @@ class CharacterData(object):
         return (self.__base_stats)[0].game_class
 
     def add_class_and_growth_rates(self, game_class, rates):
-        # TOOD: doctstring
+        """
+            Adds a potential class and the associated growth rates to
+
+            Args:
+                game_class : a str describing a game class this character can
+                    become
+                rates : a dict<Stat, float> mapping in game stats onto the
+                    growth rates for that stat when this character is of the 
+                    class specified by game_class
+        """
         self.__game_class_options.append(game_class)
         self.__growth_rate_class = self.GrowthRates(rates)
