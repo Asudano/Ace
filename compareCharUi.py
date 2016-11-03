@@ -3,9 +3,18 @@ from UserLogs import UserLogs
 from StatEnum import Stat
 
 class CompareCharUi(Frame):
+
+    """
+        CompareCharUi manages the UI for the character comparison screen.
+    """
+
     def __init__(self, user_logs, master=None):
         """
             inits a new CompareCharUi object to compare two user-specified characters
+
+            Args:
+                user_logs : UserLogs variable containing user data
+                master : tkinter.widget identifying the parent widget
         """
         Frame.__init__(self, master)
         self.char_attribute = []

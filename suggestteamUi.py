@@ -2,9 +2,17 @@ from tkinter import *
 from UserLogs import UserLogs
 
 class SuggestTeamUi(Frame):
+    """
+        SuggestTeamUi manages the team suggestion screen
+    """
+
     def __init__(self, user_logs, master=None):
         """
             inits a new SuggestTeamUi object to suggest a team of CharacterInstances for a user
+
+            Args:
+                user_logs : the UserLogs singleton
+                master : tkinter.widget identifying the parent widget
         """
         Frame.__init__(self, master)
         self.__user_logs = user_logs

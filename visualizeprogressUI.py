@@ -2,10 +2,17 @@ from tkinter import *
 
 
 class VisualizeProgressUi(Frame):
+    """
+        VisualizeProgressUi manages the progress visualization screen
+    """
+
     def __init__(self, master=None):
         """
-            inits a new VisualizeProgressUi object to show a CharacterInstance's progress throughout multiple states
+            inits a new VisualizeProgressUi object to show a 
+                CharacterInstance's progress throughout multiple states
 
+            Args:
+                master : tkinter.widget identifying the parent widget
         """
         Frame.__init__(self, master)
         self.char_attribute = []
@@ -13,7 +20,8 @@ class VisualizeProgressUi(Frame):
 
     def visualize_f(self):
         """
-            visualize_f shows a graph of the CharacterInstance's States over time vs. the predicted states
+            visualize_f shows a graph of the CharacterInstance's States over 
+                time vs. the predicted states
         """
         pass
 
@@ -54,7 +62,17 @@ class VisualizeProgressUi(Frame):
 
         stat_var = StringVar(master)
         stat_var.set("HP")
-        stat_var_drop = OptionMenu(master, stat_var, "HP", "Str", "Mag", "Skl", "Spd", "Lck", "Def", "Res")
+        stat_var_drop = OptionMenu(
+            master, 
+            stat_var, 
+            "HP", 
+            "Str", 
+            "Mag", 
+            "Skl", 
+            "Spd", 
+            "Lck", 
+            "Def", 
+            "Res")
         stat_var_drop.grid(row=1, column=0, columnspan=2, sticky=E + W)
 
         visualize = Button(master, text="Visualize", command=self.visualize_f)

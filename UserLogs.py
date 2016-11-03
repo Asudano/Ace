@@ -10,9 +10,6 @@ class UserLogs(object):
 	Attributes:
 		__character_instances : a dict<str, CharacterInstance> mapping names
 			onto CharacterInstance objects
-
-		__character_instances : a list<CharacterInstance> storing all
-			CharacterInstance objects created by the user
 		__log_file : file object describing location logs are stored
 	"""
 	def __init__(self, infile_name, game_data):

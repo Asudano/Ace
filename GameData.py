@@ -148,7 +148,7 @@ class GameData(object):
 			promoted_class : a str with name of the class to promote to
 
 		Returns:
-			a dict<a, int> describing gains/losses from a character
+			a dict<Stat, int> describing gains/losses from a character
 				promoting from base_class to promoted_class if possible
 		"""
 		return self.__promotion_gains[(base_class, promoted_class)]

@@ -9,9 +9,16 @@ from UserLogs import UserLogs
 
 
 class Application(Frame):
+    """
+        Application manages the homescreen for the application
+    """
+
     def __init__(self, master=None):
         """
             starts up program, parses game data, and loads in previous CharacterInstances and States
+
+            Args:
+                master : tkinter.widget identifying the parent widget
         """
         Frame.__init__(self, master)
         self.game_data = GameData("shadow_dragon.csv")

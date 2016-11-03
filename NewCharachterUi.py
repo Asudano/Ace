@@ -7,15 +7,25 @@ from UserLogs import UserLogs
 
 
 class NewCharacterUi(Frame):
+
+	"""
+		NewCharacterUi manages the New Character creation screen
+
+		Attributes:
+				__char_attribute : a list<str> that contains the entry objects
+					to be referency when creating a new character.
+				__game_data : the GameData singleton
+				__user_logs : the UserLogs singleton
+	"""
+
 	def __init__(self, game_data, user_logs, master=None):
 		"""
 			inits a new NewCharacterUi object to add a new Character to user's saved CharacterInstances
 
-			 Attributes:
-				__char_attribute : a list that will hold that entry object to be referency when creating a new
-				character.
-				__game_data : A variable to reference game_data class that was passed into the class
-				__user_logs A variable to reference the user_ogs class
+			 Args:
+			 	game_data : the GameData singleton
+			 	user_logs : the UserLogs singleton
+			 	master : tkinter.widget identifying the parent widget
 		"""
 		Frame.__init__(self, master)
 		self.__char_attribute = []

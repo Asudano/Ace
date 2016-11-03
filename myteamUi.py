@@ -3,9 +3,16 @@ from tkinter import *
 
 
 class MyTeamUi(Frame):
+    """
+        MyTeamUi manages the MyTeam screen of the UI
+    """
+
     def __init__(self, master=None):
 		"""
 			inits a new MyTeamUi object to suggest CharacterInstances for the user's team
+
+            Args:
+                master : tkinter.widget identifying the parent widget
 		"""
         Frame.__init__(self, master)
         self.createwidgets()
@@ -16,7 +23,7 @@ class MyTeamUi(Frame):
     def suggest_team_f(self):
         pass
 
-    def createwidgets(self):
+    def create_widgets(self):
         master = self.master
 
         compare_char = Button(master, text="Compare Character", command=self.compare_char_f)
