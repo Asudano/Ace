@@ -66,15 +66,14 @@ class Application(Frame):
         app.mainloop()
         root.destroy()
 
-    @staticmethod
-    def visualize_progress_f():
+    def visualize_progress_f(self):
         """Creates the Visualize Progress window
             
         Creates a window to see a graph of the progress of a CharacterInstance 
         throughout all States
         """
         root = Tk()
-        app = VisualizeProgressUi(master=root)
+        app = VisualizeProgressUi(self.user_logs, self.game_data, master=root)
         app.mainloop()
         root.destroy()
 

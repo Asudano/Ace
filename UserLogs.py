@@ -102,6 +102,14 @@ class UserLogs(object):
 		    the CharacterInstance with the given name
 		"""
 		return self.__character_instances[name]
+		
+	def get_all_names(self):
+		"""Returns list of all names of characters in CharacterInstances
+		"""
+		all_names = []
+		for name in self.__character_instances:
+			all_names.append(name)
+		return all_names
 
 	def update_logs(self, new_character_instance):
 		"""Updates logs with new CharacterInstance
@@ -179,7 +187,24 @@ class UserLogs(object):
 		elif(sum_1 > sum_2):
 			return 1
 		return 0
-
+		
+	def visualize_progress(self, char, stat, game_data):
+		# need to go through all the states of that character and calculate the stat at that level
+		# returns two arrays, actual and expected
+		all_states = char.get_all_states()
+		char_name = char.name
+		actual = []
+		expected = []
+		for state in all_states:
+			level = state.level
+			game_class = state.game_class
+			print(state.get_stat_value(stat)[Stat.stat])
+			actual.append(state.get_stat_value(stat))
+			print('here')
+			game_character = game_data.get_character_data(char_name)
+			expected.append(game_character.predict_state(level, game_class, stat, game_data))
+		return (actual,expected)
+		
 	def recommend_team(self, num_characters):
 		"""Recommends a team for the user
 

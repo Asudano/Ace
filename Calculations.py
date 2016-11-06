@@ -1,6 +1,7 @@
 from CharacterData import CharacterData
+from GameData import GameData
 
-def math_model(all_characters, max_stats, promotion_gains, base_classes, promoted_classes, char, level, class_name):
+def math_model(game_data, char, level, class_name):
 	'''
 		all_characters: list of all the CharacterData objects
 		max_stats: dictionary mapping name of class to list of max stats

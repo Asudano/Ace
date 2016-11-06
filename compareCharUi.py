@@ -106,9 +106,28 @@ class CompareCharUi(Frame):
 		master = self.master
 		self.create_labels("Character 1 Name", 0, 0)
 		self.create_text_box("", 0)
+		"""name1 = StringVar(master)
+		list_of_names = self.user_logs.get_all_names()
+		name1.set(list_of_names[0])
+		name1_drop = OptionMenu(
+			master, 
+			name1, 
+			list_of_names)
+		name1_drop.grid(row=0, column=1, columnspan=2, sticky=E + W)
+		self.char_attribute.append(name1)"""
 
 		self.create_labels("Character 2 Name", 1, 0)
 		self.create_text_box("", 1)
+		"""name2 = StringVar(master)
+		list_of_names = self.user_logs.get_all_names()
+		name2.set(list_of_names[0])
+		name2_drop = OptionMenu(
+			master, 
+			name2, 
+			list_of_names)
+		name2_drop.grid(row=1, column=1, columnspan=2, sticky=E + W)
+		self.char_attribute.append(name2)"""
+		
 		compare = Button(master, text="Compare", command=self.compare_f)
 		compare.grid(row=2, column=0, columnspan=2, sticky=E+W)
 
