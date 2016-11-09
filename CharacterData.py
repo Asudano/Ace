@@ -93,50 +93,48 @@ class CharacterData(object):
 			level_diff = level - int(self.base_level)
 			expected_stat = self.get_base_stats()[stat]
 			growth_rates = self.get_growth_rates(game_class)
-			return (expected_stat + level_diff*(float(growth_rates[stat])/100))
-			#for stat in expected_stats:
-			#	expected_stats[stat] = expected_stats[stat] + level_diff*(float(growth_rates[stat])/100)
+			expected_stat = (expected_stat + level_diff*(float(growth_rates[stat])/100))
 		
 		# if character is in a promoted class
 		
 		# deal with prepromotes
 		
-		if(game_data.is_promoted_class(get_base_class())):
+		if(game_data.is_promoted_class(self.get_base_class())):
 			level_diff = level - int(self.base_level)
-			expected_stats = self.get_base_stats()
-			growth_rates = self.get_growth_rates(get_base_class())
-			for stat in expected_stats:
-				expected_stats[stat] = expected_stats[stat] + level_diff*(float(growth_rates[stat])/100)
+			expected_stat = self.get_base_stats()[stat]
+			growth_rates = self.get_growth_rates(self.get_base_class())
+			expected_stat = (expected_stat + level_diff*(float(growth_rates[stat])/100))
 				
 		# non-prepromotes
 		elif(game_data.is_promoted_class(game_class)):
-			base_class = get_base_class()
+			base_class = self.get_base_class()
 						
 			# add up levels to base level 20
 			level_diff = 20 - int(self.base_level)
-			base_expected_stats = self.get_base_stats()
+			base_expected_stat = self.get_base_stats()[stat]
 			base_growth_rates = self.get_growth_rates(base_class)
-			for stat in base_expected_stats:
-				base_expected_stats[stat] = base_expected_stats[stat] + level_diff*(float(base_growth_rates[stat])/100)
-			expected_stats = base_expected_stats
+			base_expected_stat = base_expected_stat + level_diff*(float(base_growth_rates[stat])/100)
+			expected_stat = base_expected_stat
+			
+			# make sure base class isn't over max stats
+			max_stats = game_data.max_stats(base_class)
+			if(expected_stat > max_stats[stat]):
+				expected_stat = max_stats[stat]
 			
 			# add promotion gains
-			promotion_gains = game_data(base_class, game_class)
-			stat_dict = promotion_gains[base_class][class_name]
-			for stat in stat_dict:
-				expected_stats[stat] = expected_stats[stat] + stat_dict[stat]
+			promotion_gains = game_data.promotion_gains(base_class, game_class)
+			expected_stat = expected_stat + promotion_gains[stat]
 				
 			# now do same for levels in promoted class
 			level_diff = level - 1
-			growth_rates = curr_char.get_growth_rates(class_name)
-			for stat in expected_stats:
-				expected_stats[stat] = expected_stats[stat] + level_diff*(float(growth_rates[stat])/100)
+			growth_rates = self.get_growth_rates(game_class)
+			expected_stat = (expected_stat + level_diff*(float(growth_rates[stat])/100))
 		
 		# make sure expected stats are not over the max stats for that class
-		for stat in expected_stats:
-			if(expected_stats[stat] > max_stats[class_name][stat]):
-				expected_stats[stat] = max_stats[class_name][stat]
-		pass
+		max_stats = game_data.max_stats(game_class)
+		if(expected_stat > max_stats[stat]):
+			expected_stat = max_stats[stat]
+		return expected_stat
 
 	@property
 	def base_level(self):

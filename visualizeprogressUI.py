@@ -25,6 +25,7 @@ class VisualizeProgressUi(Frame):
 		Creats a grapoh of the CharacterInstance's States over time vs.
 		predicted States
 		"""
+		master = self.master
 		char_name = str(self.char_attribute[0].get())
 		stat = str_to_stat(str(self.char_attribute[1].get()))
 		char_inst = self.user_logs.get_char_instance(char_name)

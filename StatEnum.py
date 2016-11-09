@@ -47,7 +47,7 @@ def str_to_stat(s):
 	elif(s == "Mag"):
 		return Stat.Mag
 	elif(s == "Skl"):
-		return Stat.SKl
+		return Stat.Skl
 	elif(s == "Spd"):
 		return Stat.Spd
 	elif(s == "Lck"):
