@@ -90,9 +90,9 @@ class CharacterData(object):
 		"""
 		# if character is in a base class
 		if(game_data.is_base_class(game_class)):
-			level_diff = level - int(get_base_level())
-			expected_stat = get_base_stats()[stat]
-			growth_rates = get_growth_rates(game_class)
+			level_diff = level - int(self.base_level)
+			expected_stat = self.get_base_stats()[stat]
+			growth_rates = self.get_growth_rates(game_class)
 			return (expected_stat + level_diff*(float(growth_rates[stat])/100))
 			#for stat in expected_stats:
 			#	expected_stats[stat] = expected_stats[stat] + level_diff*(float(growth_rates[stat])/100)
@@ -102,9 +102,9 @@ class CharacterData(object):
 		# deal with prepromotes
 		
 		if(game_data.is_promoted_class(get_base_class())):
-			level_diff = level - int(get_base_level())
-			expected_stats = get_base_stats()
-			growth_rates = get_growth_rates(get_base_class())
+			level_diff = level - int(self.base_level)
+			expected_stats = self.get_base_stats()
+			growth_rates = self.get_growth_rates(get_base_class())
 			for stat in expected_stats:
 				expected_stats[stat] = expected_stats[stat] + level_diff*(float(growth_rates[stat])/100)
 				
@@ -113,9 +113,9 @@ class CharacterData(object):
 			base_class = get_base_class()
 						
 			# add up levels to base level 20
-			level_diff = 20 - int(get_base_level())
-			base_expected_stats = get_base_stats()
-			base_growth_rates = get_growth_rates(base_class)
+			level_diff = 20 - int(self.base_level)
+			base_expected_stats = self.get_base_stats()
+			base_growth_rates = self.get_growth_rates(base_class)
 			for stat in base_expected_stats:
 				base_expected_stats[stat] = base_expected_stats[stat] + level_diff*(float(base_growth_rates[stat])/100)
 			expected_stats = base_expected_stats
@@ -138,7 +138,8 @@ class CharacterData(object):
 				expected_stats[stat] = max_stats[class_name][stat]
 		pass
 
-	def get_base_level(self):
+	@property
+	def base_level(self):
 		return (self.__base_stats)[0].level
 
 	def get_base_stats(self):
@@ -158,4 +159,4 @@ class CharacterData(object):
 				class specified by game_class
 		"""
 		self.__game_class_options.append(game_class)
-		self.__growth_rate_class = self.GrowthRates(rates)
+		self.__growth_rate_class[game_class] = self.GrowthRates(rates)

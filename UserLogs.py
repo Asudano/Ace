@@ -198,9 +198,11 @@ class UserLogs(object):
 		for state in all_states:
 			level = state.level
 			game_class = state.game_class
-			print(state.get_stat_value(stat)[Stat.stat])
+			#print(stat)
+			#print(state.get_stat_value(stat))
+			#print(state.get_stat_value(stat)[Stat.stat])
 			actual.append(state.get_stat_value(stat))
-			print('here')
+			#print('here')
 			game_character = game_data.get_character_data(char_name)
 			expected.append(game_character.predict_state(level, game_class, stat, game_data))
 		return (actual,expected)

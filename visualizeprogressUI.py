@@ -1,4 +1,5 @@
 from tkinter import *
+from StatEnum import *
 
 
 class VisualizeProgressUi(Frame):
@@ -25,7 +26,7 @@ class VisualizeProgressUi(Frame):
 		predicted States
 		"""
 		char_name = str(self.char_attribute[0].get())
-		stat = str(self.char_attribute[1].get())
+		stat = str_to_stat(str(self.char_attribute[1].get()))
 		char_inst = self.user_logs.get_char_instance(char_name)
 		(actual, expected) = self.user_logs.visualize_progress(char_inst, stat, self.game_data)
 		for i in range(0,len(actual)):

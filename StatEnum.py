@@ -29,3 +29,32 @@ def stat_dict(array):
 	d[Stat.Def] = int(array[6])
 	d[Stat.Res] = int(array[7])
 	return d
+
+def str_to_stat(s):
+	"""Maps a str describing an enum element onto that enum element
+	
+	Args:
+		s : a str element in {"HP", "Str", "Mag", "Skl", "Spd", "Lck", 
+		"Def", "Res"}
+		
+	Returns:
+		a Stat
+	"""
+	if(s == "HP"):
+		return Stat.HP
+	elif(s == "Str"):
+		return Stat.Str
+	elif(s == "Mag"):
+		return Stat.Mag
+	elif(s == "Skl"):
+		return Stat.SKl
+	elif(s == "Spd"):
+		return Stat.Spd
+	elif(s == "Lck"):
+		return Stat.Lck
+	elif(s == "Def"):
+		return Stat.Def
+	elif(s == "Res"):
+		return Stat.Res
+	else:
+		print("ERROR")
