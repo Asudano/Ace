@@ -34,7 +34,10 @@ class Application(Frame):
         if self.app != False:
             self.app.end()
         root = self.master
-        self.app = NewCharacterUi(self.game_data, self.user_logs, index=5, master=root)
+        self.app = NewCharacterUi(self.game_data,
+                                  self.user_logs,
+                                  7,
+                                  master=root)
         self.app.mainloop()
 
     def compare_char_f(self):
@@ -46,7 +49,7 @@ class Application(Frame):
         if self.app != False:
             self.app.end()
         root = self.master
-        self.app = CompareCharUi(self.user_logs, index=5, master=root)
+        self.app = CompareCharUi(self.user_logs, 7, master=root)
         self.app.mainloop()
 
     def suggest_team_f(self):
@@ -58,7 +61,7 @@ class Application(Frame):
         if self.app != False:
             self.app.end()
         root = self.master
-        self.app = SuggestTeamUi(self.user_logs, 5, master=root)
+        self.app = SuggestTeamUi(self.user_logs, 7, master=root)
         self.app.mainloop()
 
     def update_f(self):
@@ -69,7 +72,7 @@ class Application(Frame):
         if self.app != False:
             self.app.end()
         root = self.master
-        self.app = UpdateUi(self.user_logs, 5, master=root)
+        self.app = UpdateUi(self.user_logs, 7, master=root)
         self.app.mainloop()
 
     def visualize_progress_f(self):
@@ -81,7 +84,7 @@ class Application(Frame):
         if self.app != False:
             self.app.end()
         root = self.master
-        self.app = VisualizeProgressUi(master=root, index=5)
+        self.app = VisualizeProgressUi(master=root, index=7)
         self.app.mainloop()
 
     def create_widgets(self):
