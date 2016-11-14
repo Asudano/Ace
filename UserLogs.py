@@ -215,7 +215,7 @@ class UserLogs(object):
 		Returns: List of top num_characters name strings to use
 		"""
 		# TODO: clean up logic
-		sum_name = {}
+		name_sum = {}
 		for char in self.__character_instances:
 			state = self.__character_instances[char].get_current_state()
 			sum = 0
@@ -227,12 +227,18 @@ class UserLogs(object):
 			sum += state.get_stat_value(Stat.Lck)
 			sum += state.get_stat_value(Stat.Def)
 			sum += state.get_stat_value(Stat.Res)
-			sum_name[sum] = self.__character_instances[char].name
+			name_sum[self.__character_instances[char].name] = sum
 		all_sums = []
-		for key in sum_name:
-			all_sums.append(key)
+		for key in name_sum:
+			all_sums.append(name_sum[key])
 		all_sums.sort(reverse=True)
 		best_characters = []
 		for i in range(0, num_characters):
-			best_characters.append(sum_name[all_sums[i]])	
+			# find character with current sum
+			for key in name_sum:
+				if(name_sum[key] == all_sums[i]):
+					# add if not already there
+					if(key not in best_characters):
+						best_characters.append(key)
+						break
 		return best_characters
