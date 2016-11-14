@@ -5,7 +5,7 @@ class VisualizeProgressUi(Frame):
     """Manages the progress visualization screen
     """
 
-    def __init__(self, master=None):
+    def __init__(self, master=None, index=0):
         """inits a new VisualizeProgressUi object to show a 
         CharacterInstance's progress throughout multiple states
 
@@ -13,6 +13,8 @@ class VisualizeProgressUi(Frame):
             master : tkinter.widget identifying the parent widget
         """
         Frame.__init__(self, master)
+        self.index = index
+        self.components = []
         self.char_attribute = []
         self.create_widgets()
 
@@ -33,8 +35,9 @@ class VisualizeProgressUi(Frame):
         """
         master = self.master
         char_name = Label(master, text=character_name)
-        char_name.grid(row=gridN, column=0, columnspan=1, sticky=E + W)
+        char_name.grid(row=gridN, column=self.index, columnspan=1, sticky=E + W)
         self.char_attribute.append(char_name)
+        self.components.append(char_name)
 
     def create_textbox(self, attribute, gridN):
         """Creates a text box element
@@ -45,8 +48,9 @@ class VisualizeProgressUi(Frame):
         """
         master = self.master
         textbox = Entry(master)
-        textbox.grid(row=gridN, column=1, columnspan=1, sticky=E + W)
+        textbox.grid(row=gridN, column=self.index + 1, columnspan=1, sticky=E + W)
         textbox.insert(0, attribute)
+        self.components.append(textbox)
 
     def create_widgets(self):
         """Creates display elements
@@ -69,14 +73,22 @@ class VisualizeProgressUi(Frame):
             "Lck", 
             "Def", 
             "Res")
-        stat_var_drop.grid(row=1, column=0, columnspan=2, sticky=E + W)
+        stat_var_drop.grid(row=1, column=self.index, columnspan=2, sticky=E + W)
+        self.components.append(stat_var_drop)
 
         visualize = Button(master, text="Visualize", command=self.visualize_f)
-        visualize.grid(row=2, column=0, columnspan=2, sticky=E + W)
+        visualize.grid(row=2, column=self.index, columnspan=2, sticky=E + W)
+        self.components.append(visualize)
 
+    def end(self):
+        """
+        This function destroys all of the elements created
+        """
+        for i in self.components:
+            i.destroy()
 
 if __name__ == "__main__":
     root = Tk()
     app = VisualizeProgressUi(master=root)
     app.mainloop()
-    root.destroy()
+
