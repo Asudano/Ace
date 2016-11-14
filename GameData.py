@@ -167,6 +167,10 @@ class GameData(object):
 		Returns:
 		    a bool describing whether game_class is in __base_classes
 		"""
+		if((game_class == 'Lord') or (game_class == 'Ballistician') or 
+			(game_class == 'Chameleon') or (game_class == 'Manakete') or 
+			(game_class == 'Thief')):
+			return True
 		return game_class in self.__base_classes
 
 	def is_promoted_class(self, game_class):
