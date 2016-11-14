@@ -28,7 +28,6 @@ class UpdateUi(Frame):
 		Updates an existing character with a new state given by then user
 		"""
 		# 1. select character instance from UserLogs
-		print(self.__char_attribute[0].get())
 		char_instance = self.user_logs.get_char_instance(str(self.__char_attribute[0].get()))
 
 		# 2. Create new State
@@ -79,7 +78,16 @@ class UpdateUi(Frame):
 		master = self.master
 
 		self.create_labels("Character Name", 0)
-		self.create_textbox("", 0)
+		#self.create_textbox("", 0)
+		name = StringVar(master)
+		list_of_names = self.user_logs.get_all_names()
+		name.set(list_of_names[0])
+		name_drop = OptionMenu(
+			master, 
+			name, 
+			*list_of_names)
+		name_drop.grid(row=0, column=1, columnspan=2, sticky=E + W)
+		self.__char_attribute.append(name)
 
 		self.create_labels("Class", 1)
 		self.create_textbox("", 1)

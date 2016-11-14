@@ -56,10 +56,15 @@ class VisualizeProgressUi(Frame):
 			gridN : int that specifies number of rows
 		"""
 		master = self.master
-		textbox = Entry(master)
-		textbox.grid(row=gridN, column=1, columnspan=1, sticky=E + W)
-		textbox.insert(0, attribute)
-		self.char_attribute.append(textbox)
+		name = StringVar(master)
+		list_of_names = self.user_logs.get_all_names()
+		name.set(list_of_names[0])
+		name_drop = OptionMenu(
+			master, 
+			name, 
+			*list_of_names)
+		name_drop.grid(row=0, column=1, columnspan=2, sticky=E + W)
+		self.char_attribute.append(name)
 
 	def create_widgets(self):
 		"""Creates display elements
