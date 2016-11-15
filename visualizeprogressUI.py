@@ -1,3 +1,8 @@
+import matplotlib
+matplotlib.use('TkAgg')
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
+
 from tkinter import *
 
 
@@ -19,10 +24,23 @@ class VisualizeProgressUi(Frame):
     def visualize_f(self):
         """Creates a graph for character growth visualization
         
-        Creats a grapoh of the CharacterInstance's Statses over time vs.
+        Creates a graph of the CharacterInstance's States over time vs.
         predicted States
         """
-        pass
+
+        # TODO: Replace this example code with our graph
+        f = Figure(figsize=(5,5), dpi=100)
+        a = f.add_subplot(111)
+        a.plot([1,2,3,4,5,6,7,8],[1,2,3,4,5,6,7,8])
+
+    
+        
+        canvas = FigureCanvasTkAgg(f, self)
+        canvas.show()
+        #canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand = True)
+        
+        
+        
 
     def create_labels(self, character_name, gridN):
         """Creates labels for UI elements
