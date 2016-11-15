@@ -99,6 +99,33 @@ class CompareCharUi(Frame):
 		res1.grid(row=12, column=0, columnspan=1)
 		res2 = Label(master, text=curr_state2.get_stat_value(Stat.Res))
 		res2.grid(row=12, column=1, columnspan=2)
+  
+  
+          num_stats = 8        
+          # TODO: Replace with character data
+          char1 = [1, 2, 3, 4, 5, 6, 7, 8]
+          char2 = [5, 2, 5, 2, 1, 6, 8, 4]
+          charname1 = 'AAAA'
+          charname2 = 'BBBB'
+          
+          indices = range(num_stats)
+          width = np.min(np.diff(indices))/3
+          
+          f = Figure(figsize=(5,5), dpi=100)
+          a = f.add_subplot(111)
+          
+          rects1 = a.bar(indices-width, char1, width, color='b', label='Char1')
+          rects2 = a.bar(indices,  char2, width, color='r', label='Char2')
+          
+          a.set_ylabel('Stat Values')
+          a.set_title('Stats of {0} vs. {1}'.format(charname1, charname2))
+          a.set_xticks(indices)
+          a.set_xticklabels(('HP', 'Str', 'Mag', 'Skl', 'Spd', 'Lck', 'Def', 'Res'))
+          a.legend((rects1[0], rects2[0]), (charname1, charname2))
+          
+          canvas = FigureCanvasTkAgg(f, self)
+          canvas.show()
+          #canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand = True)
 		
 	def create_widgets(self):
 		"""Creates display elements for update screen

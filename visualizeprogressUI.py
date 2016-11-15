@@ -28,12 +28,17 @@ class VisualizeProgressUi(Frame):
         predicted States
         """
 
-        # TODO: Replace this example code with our graph
+        # TODO: Replace with character data
+        levels = [1, 2, 3]
+        predicted_values = [1, 2, 3]
+        real_values = [2, 6, 8]
+
         f = Figure(figsize=(5,5), dpi=100)
         a = f.add_subplot(111)
-        a.plot([1,2,3,4,5,6,7,8],[1,2,3,4,5,6,7,8])
+        predicted_line = a.plot(levels, predicted_values, label="Predicted Values")
+        real_line = a.plot(levels, real_values, label="Real Values")
 
-    
+        a.legend(loc=1)
         
         canvas = FigureCanvasTkAgg(f, self)
         canvas.show()
