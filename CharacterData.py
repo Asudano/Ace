@@ -85,8 +85,8 @@ class CharacterData(object):
 			game_data : the GameData singleton object
 
 		Returns:
-			A state object representing the average for this character at the
-			given class and level.
+			A float representing the value for this character at the
+			given class and level for the specified stat.
 		"""
 		# if character is in a base class
 		if(game_data.is_base_class(game_class)):
@@ -145,6 +145,9 @@ class CharacterData(object):
 
 	def get_base_class(self):
 		return (self.__base_stats)[0].game_class
+		
+	def get_game_class_options(self):
+		return (self.__game_class_options)
 
 	def add_class_and_growth_rates(self, game_class, rates):
 		"""Adds a potential class and the associated growth rates to

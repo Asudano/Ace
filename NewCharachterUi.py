@@ -35,8 +35,20 @@ class NewCharacterUi(Frame):
 		"""Creates a new CharacterInstance and an initial state based on
 		user data
 		"""
-		character_data = self.__game_data.get_character_data(str(
+		# If the character is not in the game, it cannot be added.
+		character_data = None
+		try:
+			character_data = self.__game_data.get_character_data(str(
 		        self.__char_attribute[0].get()))
+		except:
+			return
+		for i in range(3,11):
+			try:
+				valid = int(self.__char_attribute[i].get())
+				if(valid < 0):
+					return
+			except:
+				return
 		stat_dict = {Stat.HP: int(self.__char_attribute[3].get()), 
 		             Stat.Str: int(self.__char_attribute[4].get()),
 		             Stat.Mag: int(self.__char_attribute[5].get()), 
@@ -45,6 +57,24 @@ class NewCharacterUi(Frame):
 		             Stat.Lck: int(self.__char_attribute[8].get()),
 		             Stat.Def: int(self.__char_attribute[9].get()), 
 		             Stat.Res: int(self.__char_attribute[10].get()), }
+					 
+		# make sure class is valid for that character
+		input_class = str(self.__char_attribute[1].get())
+		if(input_class not in character_data.get_game_class_options()):
+			return
+			
+		# make sure level is valid for class
+		input_level = int(self.__char_attribute[2].get())
+		if(input_level <= 0):
+			return
+		# goes to 30: Ballistician, Thief, Lord, Manakete, Chameleon
+		if((input_level > 20) and (input_class != 'Ballistician') and 
+			(input_class != 'Thief') and (input_class != 'Lord') and 
+			(input_class != 'Manakete') and (input_class != 'Chameleon')):
+			return
+		if(input_level > 30):
+			return
+		
 		state = State(int(self.__char_attribute[2].get()), 
 		              str(self.__char_attribute[1].get()), stat_dict)
 		char_inst = CharacterInstance(character_data, state)

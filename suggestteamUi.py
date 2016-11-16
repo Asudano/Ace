@@ -23,6 +23,13 @@ class SuggestTeamUi(Frame):
 		most recent State and displays the names
 		"""
 		master = self.master
+		number = -1
+		try:
+			number = int(self.__num_char_inp.get())
+		except:
+			return
+		if((number < 0) or (number > len(self.__user_logs.get_all_names()))):
+			return
 		list_char_inst = self.__user_logs.recommend_team(int(
 		        self.__num_char_inp.get()))
 		for i in range(0, len(list_char_inst)):
@@ -37,7 +44,7 @@ class SuggestTeamUi(Frame):
 		"""Creates display elements
 		"""
 		master = self.master
-		num_char = Label(master, text="Number of Charachters")
+		num_char = Label(master, text="Number of Characters")
 		num_char.grid(row=0, column=0, columnspan=1, sticky=E + W)
 
 		self.__num_char_inp.grid(row=0, column=1, columnspan=1, sticky=E + W)

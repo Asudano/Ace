@@ -25,6 +25,9 @@ class CharacterInstance(object):
 	@property
 	def name(self):
 		return self.__character_data.name
+		
+	def get_char_data(self):
+		return self.__character_data
 
 	def add_new_state(self, state):
 		"""Adds a new State to __states

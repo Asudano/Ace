@@ -30,6 +30,14 @@ class UpdateUi(Frame):
 		# 1. select character instance from UserLogs
 		char_instance = self.user_logs.get_char_instance(str(self.__char_attribute[0].get()))
 
+		for i in range(3,11):
+			try:
+				valid = int(self.__char_attribute[i].get())
+				if(valid < 0):
+					return
+			except:
+				return
+		
 		# 2. Create new State
 		stat_dict = {Stat.HP: int(self.__char_attribute[3].get()),
 		             Stat.Str: int(self.__char_attribute[4].get()),
@@ -41,6 +49,23 @@ class UpdateUi(Frame):
 		             Stat.Res: int(self.__char_attribute[10].get()), }
 		state = State(int(self.__char_attribute[2].get()), 
 		              str(self.__char_attribute[1].get()), stat_dict)
+					  
+		# make sure class is valid for that character
+		input_class = str(self.__char_attribute[1].get())
+		if(input_class not in char_instance.get_char_data().get_game_class_options()):
+			return
+			
+		# make sure level is valid for class
+		input_level = int(self.__char_attribute[2].get())
+		if(input_level <= 0):
+			return
+		# goes to 30: Ballistician, Thief, Lord, Manakete, Chameleon
+		if((input_level > 20) and (input_class != 'Ballistician') and 
+			(input_class != 'Thief') and (input_class != 'Lord') and 
+			(input_class != 'Manakete') and (input_class != 'Chameleon')):
+			return
+		if(input_level > 30):
+			return
 
 		# 3. Add state to character instance
 		char_instance.add_new_state(state)
