@@ -1,8 +1,14 @@
+import matplotlib
+matplotlib.use('TkAgg')
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
+
 from tkinter import *
 from UserLogs import UserLogs
 from StatEnum import Stat
 from GameData import GameData
 from State import State
+import numpy as np
 
 def stat_array(state):
 	arr = ([state.get_stat_value(Stat.HP),
@@ -104,13 +110,8 @@ class CompareCharUi(Frame):
 		self.create_labels(curr_state1.get_stat_value(Stat.Def), 11, 0)
 		self.create_labels(curr_state2.get_stat_value(Stat.Def), 11, 1)
 		# Res
-		res1 = Label(master, text=curr_state1.get_stat_value(Stat.Res))
-		res1.grid(row=12, column=0, columnspan=1)
-		res2 = Label(master, text=curr_state2.get_stat_value(Stat.Res))
-		res2.grid(row=12, column=1, columnspan=2)
-		
 		self.create_labels(curr_state1.get_stat_value(Stat.Res), 12, 0)
-		self.create_labels(curr_state2.get_stat_value(Stat.Res), 12, 1)
+		self.create_labels(curr_state1.get_stat_value(Stat.Res), 12, 1)
 
 		num_stats = 8        
 		charname1 = name1.name
@@ -134,8 +135,9 @@ class CompareCharUi(Frame):
 		a.set_xticklabels(('HP', 'Str', 'Mag', 'Skl', 'Spd', 'Lck', 'Def', 'Res'))
 		a.legend((rects1[0], rects2[0]), (charname1, charname2))
           
-		canvas = FigureCanvasTkAgg(f, self)
-		canvas.show()
+		canvas = FigureCanvasTkAgg(f, master)
+		canvas.get_tk_widget().grid(row = 3, column = 0, columnspan=6, rowspan=50)
+		self.components.append(canvas.get_tk_widget())
         #canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand = True)
 
 	def create_widgets(self):

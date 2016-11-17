@@ -102,13 +102,13 @@ class Application(Frame):
             master, 
             text="Compare Character", 
             command=self.compare_char_f)
-        compare_char.grid(row=0, column=4, columnspan=3, sticky=E + W)
+        compare_char.grid(row=0, column=3, columnspan=3, sticky=E + W)
 
         suggest_team = Button(
             master, 
             text="Suggest Team", 
             command=self.suggest_team_f)
-        suggest_team.grid(row=1, column=4, columnspan=3, sticky=E + W)
+        suggest_team.grid(row=1, column=3, columnspan=3, sticky=E + W)
 
         update = Button(master, text="Update", command=self.update_f)
         update.grid(row=1, column=0, columnspan=3, sticky=E + W)

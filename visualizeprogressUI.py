@@ -42,7 +42,7 @@ class VisualizeProgressUi(Frame):
             stat1.grid(row=4+i, column=self.index, columnspan=1)
             self.components.append(stat1)
             stat2 = Label(master, text=expected[i])
-            stat2.grid(row=4+i, column=self.index +1, columnspan=2)
+            stat2.grid(row=4+i, column=self.index +1, columnspan=1)
             self.components.append(stat2)
 
         f = Figure(figsize=(5,5), dpi=100)
@@ -52,8 +52,10 @@ class VisualizeProgressUi(Frame):
 
         a.legend(loc=1)
         
-        canvas = FigureCanvasTkAgg(f, self)
-        canvas.show()
+        canvas = FigureCanvasTkAgg(f, master)
+        canvas.get_tk_widget().grid(row = 3, column = 0, rowspan=20,columnspan=self.index - 1, sticky= E+W)
+        self.components.append(canvas.get_tk_widget())
+        #canvas.show()
         #canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand = True)
 
 
