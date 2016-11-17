@@ -22,7 +22,7 @@ class State(object):
 		        enum onto the values the character currently has for 
 			each stat
 		"""
-		self.__level = level
+		self.__level = int(level)
 		self.__game_class = game_class
 		self.stats = stats
 		
@@ -47,9 +47,7 @@ class State(object):
 		Returns:
 			A float associated with the Stat value for this state
 		"""
-		val = -1
 		if (stat in (self.stats).keys()):
-			val = self.stats[stat]
 			return ((self.stats)[stat])
 		else:
 			#TODO: error handle
