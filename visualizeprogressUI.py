@@ -32,30 +32,11 @@ class VisualizeProgressUi(Frame):
         Creates a graph of the CharacterInstance's States over time vs.
         predicted States
         """
-
-        # Graph Branch
-        # TODO: Replace with character data
-        levels = [1, 2, 3]
-        predicted_values = [1, 2, 3]
-        real_values = [2, 6, 8]
-
-        f = Figure(figsize=(5,5), dpi=100)
-        a = f.add_subplot(111)
-        predicted_line = a.plot(levels, predicted_values, label="Predicted Values")
-        real_line = a.plot(levels, real_values, label="Real Values")
-
-        a.legend(loc=1)
-        
-        canvas = FigureCanvasTkAgg(f, self)
-        canvas.show()
-        #canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand = True)
-        
-        # Math Branch
         master = self.master
         char_name = str(self.char_attribute[0].get())
         stat = str_to_stat(str(self.char_attribute[1].get()))
         char_inst = self.user_logs.get_char_instance(char_name)
-        (actual, expected) = self.user_logs.visualize_progress(char_inst, stat, self.game_data)
+        (actual, expected, levels) = self.user_logs.visualize_progress(char_inst, stat, self.game_data)
         for i in range(0,len(actual)):
             stat1 = Label(master, text=actual[i])
             stat1.grid(row=4+i, column=self.index, columnspan=1)
@@ -63,6 +44,17 @@ class VisualizeProgressUi(Frame):
             stat2 = Label(master, text=expected[i])
             stat2.grid(row=4+i, column=self.index +1, columnspan=2)
             self.components.append(stat2)
+
+        f = Figure(figsize=(5,5), dpi=100)
+        a = f.add_subplot(111)
+        expected_line = a.plot(levels, expected, label="Predicted Values")
+        actual_line = a.plot(levels, actual, label="Real Values")
+
+        a.legend(loc=1)
+        
+        canvas = FigureCanvasTkAgg(f, self)
+        canvas.show()
+        #canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand = True)
 
 
     def create_labels(self, character_name, gridN):
