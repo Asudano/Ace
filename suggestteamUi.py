@@ -42,6 +42,7 @@ class SuggestTeamUi(Frame):
                     column=self.index,
                     columnspan=1,
                     sticky=E+W)
+            self.components.append(char_inst_label)
 
     def create_widgets(self):
         """Creates display elements
