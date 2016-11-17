@@ -102,6 +102,14 @@ class UserLogs(object):
 		    the CharacterInstance with the given name
 		"""
 		return self.__character_instances[name]
+		
+	def get_all_names(self):
+		"""Returns list of all names of characters in CharacterInstances
+		"""
+		all_names = []
+		for name in self.__character_instances:
+			all_names.append(name)
+		return all_names
 
 	def update_logs(self, new_character_instance):
 		"""Updates logs with new CharacterInstance
@@ -179,7 +187,22 @@ class UserLogs(object):
 		elif(sum_1 > sum_2):
 			return 1
 		return 0
-
+		
+	def visualize_progress(self, char, stat, game_data):
+		# need to go through all the states of that character and calculate the stat at that level
+		# returns two arrays, actual and expected
+		all_states = char.get_all_states()
+		char_name = char.name
+		actual = []
+		expected = []
+		for state in all_states:
+			level = state.level
+			game_class = state.game_class
+			actual.append(state.get_stat_value(stat))
+			game_character = game_data.get_character_data(char_name)
+			expected.append(game_character.predict_state(level, game_class, stat, game_data))
+		return (actual,expected)
+		
 	def recommend_team(self, num_characters):
 		"""Recommends a team for the user
 
@@ -192,7 +215,7 @@ class UserLogs(object):
 		Returns: List of top num_characters name strings to use
 		"""
 		# TODO: clean up logic
-		sum_name = {}
+		name_sum = {}
 		for char in self.__character_instances:
 			state = self.__character_instances[char].get_current_state()
 			sum = 0
@@ -204,12 +227,18 @@ class UserLogs(object):
 			sum += state.get_stat_value(Stat.Lck)
 			sum += state.get_stat_value(Stat.Def)
 			sum += state.get_stat_value(Stat.Res)
-			sum_name[sum] = self.__character_instances[char].name
+			name_sum[self.__character_instances[char].name] = sum
 		all_sums = []
-		for key in sum_name:
-			all_sums.append(key)
+		for key in name_sum:
+			all_sums.append(name_sum[key])
 		all_sums.sort(reverse=True)
 		best_characters = []
 		for i in range(0, num_characters):
-			best_characters.append(sum_name[all_sums[i]])	
+			# find character with current sum
+			for key in name_sum:
+				if(name_sum[key] == all_sums[i]):
+					# add if not already there
+					if(key not in best_characters):
+						best_characters.append(key)
+						break
 		return best_characters

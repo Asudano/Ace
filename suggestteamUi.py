@@ -2,7 +2,6 @@ from tkinter import *
 from UserLogs import UserLogs
 from GameData import GameData
 
-
 class SuggestTeamUi(Frame):
     """Manages the team suggestion screen
     """
@@ -27,15 +26,22 @@ class SuggestTeamUi(Frame):
         most recent State and displays the names
         """
         master = self.master
+        number = -1
+        try:
+            number = int(self.__num_char_inp.get())
+        except:
+            return
+        if((number < 0) or (number > len(self.__user_logs.get_all_names()))):
+            return
         list_char_inst = self.__user_logs.recommend_team(int(
-            self.__num_char_inp.get()))
+                self.__num_char_inp.get()))
         for i in range(0, len(list_char_inst)):
             char_inst_label = Label(master, text=list_char_inst[i])
             char_inst_label.grid(
-                row=3 + i,
-                column=self.index,
-                columnspan=1,
-                sticky=E + W)
+                    row=3+i,
+                    column=self.index,
+                    columnspan=1,
+                    sticky=E+W)
             self.components.append(char_inst_label)
 
     def create_widgets(self):
@@ -65,8 +71,8 @@ class SuggestTeamUi(Frame):
 
 if __name__ == "__main__":
     root = Tk()
-    game_data = GameData("shadow_dragon.csv")
-    user_logs = UserLogs("log.csv", game_data)
+    user_logs = UserLogs("log.csv")
     app = SuggestTeamUi(user_logs, master=root)
     app.mainloop()
     root.destroy()
+

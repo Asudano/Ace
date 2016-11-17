@@ -42,7 +42,7 @@ class Application(Frame):
 
     def compare_char_f(self):
         """Creates Compare Characters window
-
+            
         creates a window to compare two CharacterInstances based on current 
         State
         """
@@ -77,14 +77,14 @@ class Application(Frame):
 
     def visualize_progress_f(self):
         """Creates the Visualize Progress window
-
-        Creates a window to see a graph of the progress of a CharacterInstance
+            
+        Creates a window to see a graph of the progress of a CharacterInstance 
         throughout all States
         """
         if self.app != False:
             self.app.end()
         root = self.master
-        self.app = VisualizeProgressUi(master=root, index=7)
+        self.app = VisualizeProgressUi(self.user_logs, self.game_data, master=root, index=7)
         self.app.mainloop()
 
     def create_widgets(self):
@@ -93,20 +93,20 @@ class Application(Frame):
         master = self.master
 
         browse_character = Button(
-            master,
-            text="New Characters",
+            master, 
+            text="New Characters", 
             command=self.new_character_f)
         browse_character.grid(row=0, column=0, columnspan=3, sticky=E + W)
 
         compare_char = Button(
-            master,
-            text="Compare Character",
+            master, 
+            text="Compare Character", 
             command=self.compare_char_f)
         compare_char.grid(row=0, column=4, columnspan=3, sticky=E + W)
 
         suggest_team = Button(
-            master,
-            text="Suggest Team",
+            master, 
+            text="Suggest Team", 
             command=self.suggest_team_f)
         suggest_team.grid(row=1, column=4, columnspan=3, sticky=E + W)
 
@@ -114,8 +114,8 @@ class Application(Frame):
         update.grid(row=1, column=0, columnspan=3, sticky=E + W)
 
         visualize_progress = Button(
-            master,
-            text="Visualize Progress",
+            master, 
+            text="Visualize Progress", 
             command=self.visualize_progress_f)
         visualize_progress.grid(row=2, column=0, columnspan=3, sticky=E + W)
 

@@ -30,9 +30,15 @@ class UpdateUi(Frame):
         Updates an existing character with a new state given by then user
         """
         # 1. select character instance from UserLogs
-        print(self.__char_attribute[0].get())
-        char_instance = self.user_logs.get_char_instance(
-            str(self.__char_attribute[0].get()))
+        char_instance = self.user_logs.get_char_instance(str(self.__char_attribute[0].get()))
+
+        for i in range(3,11):
+            try:
+                valid = int(self.__char_attribute[i].get())
+                if(valid < 0):
+                    return
+            except:
+                return
 
         # 2. Create new State
         stat_dict = {Stat.HP: int(self.__char_attribute[3].get()),
@@ -45,6 +51,23 @@ class UpdateUi(Frame):
                      Stat.Res: int(self.__char_attribute[10].get()), }
         state = State(int(self.__char_attribute[2].get()),
                       str(self.__char_attribute[1].get()), stat_dict)
+
+        # make sure class is valid for that character
+        input_class = str(self.__char_attribute[1].get())
+        if(input_class not in char_instance.get_char_data().get_game_class_options()):
+            return
+
+        # make sure level is valid for class
+        input_level = int(self.__char_attribute[2].get())
+        if(input_level <= 0):
+            return
+        # goes to 30: Ballistician, Thief, Lord, Manakete, Chameleon
+        if((input_level > 20) and (input_class != 'Ballistician') and
+            (input_class != 'Thief') and (input_class != 'Lord') and
+            (input_class != 'Manakete') and (input_class != 'Chameleon')):
+            return
+        if(input_level > 30):
+            return
 
         # 3. Add state to character instance
         char_instance.add_new_state(state)
@@ -86,8 +109,16 @@ class UpdateUi(Frame):
         """
         master = self.master
 
-        self.create_labels("Character Name", 0)
-        self.create_textbox("", 0)
+        name = StringVar(master)
+        list_of_names = self.user_logs.get_all_names()
+        name.set(list_of_names[0])
+        name_drop = OptionMenu(
+            master,
+            name,
+            *list_of_names)
+        name_drop.grid(row=0, column=self.index, columnspan=2, sticky=E + W)
+        self.__char_attribute.append(name)
+        self.components.append(name_drop)
 
         self.create_labels("Class", 1)
         self.create_textbox("", 1)
@@ -120,7 +151,7 @@ class UpdateUi(Frame):
         self.create_textbox("", 10)
 
         update = Button(master, text="update", command=self.update_f)
-        update.grid(row=11, column=self.index, columnspan=2, sticky=E + W)
+        update.grid(row=11, column=0, columnspan=2, sticky=E + W)
         self.components.append(update)
 
     def end(self):
