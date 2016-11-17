@@ -34,9 +34,11 @@ class VisualizeProgressUi(Frame):
         (actual, expected) = self.user_logs.visualize_progress(char_inst, stat, self.game_data)
         for i in range(0,len(actual)):
             stat1 = Label(master, text=actual[i])
-            stat1.grid(row=4+i, column=0, columnspan=1)
+            stat1.grid(row=4+i, column=self.index, columnspan=1)
+            self.components.append(stat1)
             stat2 = Label(master, text=expected[i])
-            stat2.grid(row=4+i, column=1, columnspan=2)
+            stat2.grid(row=4+i, column=self.index +1, columnspan=2)
+            self.components.append(stat2)
 
 
     def create_labels(self, character_name, gridN):
