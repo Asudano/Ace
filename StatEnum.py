@@ -32,11 +32,11 @@ def stat_dict(array):
 
 def str_to_stat(s):
 	"""Maps a str describing an enum element onto that enum element
-	
+
 	Args:
-		s : a str element in {"HP", "Str", "Mag", "Skl", "Spd", "Lck", 
+		s : a str element in {"HP", "Str", "Mag", "Skl", "Spd", "Lck",
 		"Def", "Res"}
-		
+
 	Returns:
 		a Stat
 	"""
