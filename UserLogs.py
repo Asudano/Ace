@@ -10,88 +10,109 @@ class UserLogs(object):
 	    the player and stored in a .csv file.
 
 	Attributes:
-	    __character_instances : a dict<str, CharacterInstance> mapping 
-	        names onto CharacterInstance objects
-	    __log_file : file object describing location logs are stored
+	    instance : a __UserLogs object encapsulating all data for the UserLogs
 	"""
+	class __UserLogs(object):		
+		"""Stores all the data required by an instance of the UserLogs
+		singleton class
+
+		Attributes:
+	    	__character_instances : a dict<str, CharacterInstance> mapping 
+	        names onto CharacterInstance objects
+	    	__log_file : file object describing location logs are stored
+		"""
+		def __init__(self, infile_name, game_data):
+			"""Inits __UserLogs object
+
+			Reads player logs from .csv file
+
+			Args:
+			    infile_name : a str describing the filepath for the user log
+			        file
+			    game_data : the GameData singleton
+			"""
+			self.__character_instances = {}
+
+			self.log_file = infile_name
+			infile = ''
+			try:
+				infile = open(infile_name, "r")
+			except IOError:
+				# TODO: Make a better error handler
+				print("ERROR")
+
+			write_line = ""
+			count = 0
+			name = ""
+			inst_class = ""
+			inst_level = 0
+			inst_stats = {}
+
+			for line in infile:
+				line = line.strip()
+				if count % 11 == 0:
+					# name
+					name = line
+				elif count % 11 == 1:
+					# class
+					inst_class = line
+				elif count % 11 == 2:
+					# level
+					inst_level = line
+				elif count % 11 == 3:
+					# stats
+					inst_stats[Stat.HP] = float(line)
+				elif count % 11 == 4:
+					inst_stats[Stat.Str] = float(line)
+				elif count % 11 == 5:
+					inst_stats[Stat.Mag] = float(line)
+				elif count % 11 == 6:
+					inst_stats[Stat.Skl] = float(line)
+				elif count % 11 == 7:
+					inst_stats[Stat.Spd] = float(line)
+				elif count % 11 == 8:
+					inst_stats[Stat.Lck] = float(line)
+				elif count % 11 == 9:
+					inst_stats[Stat.Def] = float(line)
+				elif count % 11 == 10:
+					inst_stats[Stat.Res] = float(line)
+					new_state = State(
+					        inst_level, 
+					        inst_class, 
+					        inst_stats)
+					
+					if name in self.__character_instances.keys():
+						(self.
+						 __character_instances[name].
+						 add_new_state(new_state))
+					else:
+						c_data = game_data.get_character_data(
+						        name)
+						c_inst = CharacterInstance(
+						        c_data, 
+						        new_state)
+						self.__character_instances[name] = c_inst
+
+					name = ""
+					inst_class = ""
+					inst_level = 0
+					inst_stats = {}
+				count += 1
+		
+	instance = None
+
 	def __init__(self, infile_name, game_data):
 		"""Inits UserLogs object
 
-		Reads player logs from .csv file
+			Reads player logs from .csv file
 
-		Args:
-		    infile_name : a str describing the filepath for the user log
-		        file
-		    game_data : the GameData singleton
-		"""
-		self.__character_instances = {}
+			Args:
+			    infile_name : a str describing the filepath for the user log
+			        file
+			    game_data : the GameData singleton
+			"""
+		UserLogs.instance = UserLogs.__UserLogs(infile_name, game_data)
 
-		self.log_file = infile_name
-		infile = ''
-		try:
-			infile = open(infile_name, "r")
-		except IOError:
-			# TODO: Make a better error handler
-			print("ERROR")
-
-		write_line = ""
-		count = 0
-		name = ""
-		inst_class = ""
-		inst_level = 0
-		inst_stats = {}
-
-		for line in infile:
-			line = line.strip()
-			if count % 11 == 0:
-				# name
-				name = line
-			elif count % 11 == 1:
-				# class
-				inst_class = line
-			elif count % 11 == 2:
-				# level
-				inst_level = line
-			elif count % 11 == 3:
-				# stats
-				inst_stats[Stat.HP] = float(line)
-			elif count % 11 == 4:
-				inst_stats[Stat.Str] = float(line)
-			elif count % 11 == 5:
-				inst_stats[Stat.Mag] = float(line)
-			elif count % 11 == 6:
-				inst_stats[Stat.Skl] = float(line)
-			elif count % 11 == 7:
-				inst_stats[Stat.Spd] = float(line)
-			elif count % 11 == 8:
-				inst_stats[Stat.Lck] = float(line)
-			elif count % 11 == 9:
-				inst_stats[Stat.Def] = float(line)
-			elif count % 11 == 10:
-				inst_stats[Stat.Res] = float(line)
-				new_state = State(
-				        inst_level, 
-				        inst_class, 
-				        inst_stats)
-				
-				if name in self.__character_instances.keys():
-					(self.
-					 __character_instances[name].
-					 add_new_state(new_state))
-				else:
-					c_data = game_data.get_character_data(
-					        name)
-					c_inst = CharacterInstance(
-					        c_data, 
-					        new_state)
-					self.__character_instances[name] = c_inst
-
-				name = ""
-				inst_class = ""
-				inst_level = 0
-				inst_stats = {}
-			count += 1
-		
 	def get_char_instance(self, name):
 		"""Fetches the CharacterInstance associated with name
 		
@@ -101,13 +122,13 @@ class UserLogs(object):
 		Returns:
 		    the CharacterInstance with the given name
 		"""
-		return self.__character_instances[name]
+		return self.instance.__character_instances[name]
 		
 	def get_all_names(self):
 		"""Returns list of all names of characters in CharacterInstances
 		"""
 		all_names = []
-		for name in self.__character_instances:
+		for name in self.instance.__character_instances:
 			all_names.append(name)
 		return all_names
 
@@ -120,23 +141,19 @@ class UserLogs(object):
 		outfile = ''
 		
 		try:
-			outfile = open(self.log_file, 'w')
+			outfile = open(self.instance.log_file, 'w')
 		except IOError:
 			# TODO: Make a better error handler
-			return (game_characters,
-					max_stats,
-					promotion_gains,
-					base_classes,
-					promoted_classes)
+			print("IOError in update_logs")
 
-		self.__character_instances[new_character_instance.name] = new_character_instance
+		self.instance.__character_instances[new_character_instance.name] = new_character_instance
 
 		# print out all CharacterInstance objects with each state
 		# name, class, level, stats
-		for char in self.__character_instances:
-			for state in self.__character_instances[char].get_all_states():
+		for char in self.instance.__character_instances:
+			for state in self.instance.__character_instances[char].get_all_states():
 				outfile.write(
-				        self.__character_instances[char].name
+				        self.instance.__character_instances[char].name
 				        + '\n')
 				outfile.write(state.game_class + '\n')
 				outfile.write(str(state.level) + '\n')
@@ -216,8 +233,8 @@ class UserLogs(object):
 		"""
 		# TODO: clean up logic
 		name_sum = {}
-		for char in self.__character_instances:
-			state = self.__character_instances[char].get_current_state()
+		for char in self.instance.__character_instances:
+			state = self.instance.__character_instances[char].get_current_state()
 			sum = 0
 			sum += state.get_stat_value(Stat.HP)
 			sum += state.get_stat_value(Stat.Str)
@@ -227,7 +244,7 @@ class UserLogs(object):
 			sum += state.get_stat_value(Stat.Lck)
 			sum += state.get_stat_value(Stat.Def)
 			sum += state.get_stat_value(Stat.Res)
-			name_sum[self.__character_instances[char].name] = sum
+			name_sum[self.instance.__character_instances[char].name] = sum
 		all_sums = []
 		for key in name_sum:
 			all_sums.append(name_sum[key])
