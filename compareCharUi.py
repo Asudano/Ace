@@ -23,33 +23,34 @@ class CompareCharUi(Frame):
 		self.user_logs = user_logs
 		self.create_widgets()
 
-	def create_labels(self, character_name, grideN, colN):
+	def create_labels(self, character_name, grid_n, col_n):
 		"""Creates a label for a UI element
 
 		Args:
             character_name : str that specifies the name of the
                 character
-            gridN : int that specifies the number of rows
-            colN : int that specifies the number of columns
+            grid_n : int that specifies the number of rows
+            col_n : int that specifies the number of columns
         """
 
 		master = self.master
 		char_name = Label(master, text=character_name)
-		char_name.grid(row=grideN, column=self.index + colN, columnspan=1,
+		char_name.grid(row=grid_n, column=self.index + col_n, columnspan=1,
 					   sticky=E + W)
 		self.components.append(char_name)
 
-	def create_text_box(self, attribute, gridN):
+	def create_text_box(self, attribute, grid_n):
 		"""Creates a text box element
 
         Args:
             attribute : str that specifies the attribute for text box
-            gridN : int that specifies number of rows
+            grid_n : int that specifies number of rows
         """
 
 		master = self.master
 		textbox = Entry(master)
-		textbox.grid(row=gridN, column=self.index + 1, columnspan=1, sticky=E + W)
+		textbox.grid(row=grid_n, column=self.index + 1, columnspan=1, 
+			sticky=E + W)
 		textbox.insert(0, attribute)
 		self.char_attribute.append(textbox)
 		self.components.append(textbox)
@@ -57,12 +58,12 @@ class CompareCharUi(Frame):
 	def compare_f(self):
 		"""Shows the stats of two different characters for comparison
         """
-		name1 = self.user_logs.get_char_instance(
+		character_1 = self.user_logs.get_char_instance(
 			str(self.char_attribute[0].get()))
-		name2 = self.user_logs.get_char_instance(
+		character_2 = self.user_logs.get_char_instance(
 			str(self.char_attribute[1].get()))
-		curr_state1 = name1.get_current_state()
-		curr_state2 = name2.get_current_state()
+		curr_state1 = character_1.get_current_state()
+		curr_state2 = character_2.get_current_state()
 
 		master = self.master
 

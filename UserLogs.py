@@ -206,8 +206,8 @@ class UserLogs(object):
 		return 0
 		
 	def visualize_progress(self, char, stat, game_data):
-		# need to go through all the states of that character and calculate the stat at that level
-		# returns two arrays, actual and expected
+		# need to go through all the states of that character and calculate the
+		# stat at that level returns two arrays, actual and expected
 		all_states = char.get_all_states()
 		char_name = char.name
 		actual = []
@@ -231,7 +231,6 @@ class UserLogs(object):
 
 		Returns: List of top num_characters name strings to use
 		"""
-		# TODO: clean up logic
 		name_sum = {}
 		for char in self.instance.__character_instances:
 			state = self.instance.__character_instances[char].get_current_state()
