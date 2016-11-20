@@ -206,19 +206,38 @@ class UserLogs(object):
 		return 0
 		
 	def visualize_progress(self, char, stat, game_data):
-		# need to go through all the states of that character and calculate the
-		# stat at that level returns two arrays, actual and expected
+		"""Fetches the actual values, expected values and levels for
+		visualization of character progress
+
+		Crawls through CharacterInstance's States to retrieve the expected 
+			value, and actual value to be plotted against level
+
+		Args:
+			char : a CharacterInstance to be visualized
+		# TODO: Replace with an element of the Stat enum
+			stat : a str representing an in game stat
+			game_data : GameData singleton
+
+		Returns:
+			actual : a list of values for the character's actual stat values
+			expected: a list of values for the character's expected stat values
+				at each state's level
+			levels : a list of values for the character's levels at each state
+		"""
 		all_states = char.get_all_states()
 		char_name = char.name
 		actual = []
 		expected = []
+		levels = []
 		for state in all_states:
 			level = state.level
 			game_class = state.game_class
 			actual.append(state.get_stat_value(stat))
 			game_character = game_data.get_character_data(char_name)
-			expected.append(game_character.predict_state(level, game_class, stat, game_data))
-		return (actual,expected)
+			expected.append(game_character.predict_state(level, game_class, 
+				stat, game_data))
+			levels.append(level)
+		return (actual,expected, levels)
 		
 	def recommend_team(self, num_characters):
 		"""Recommends a team for the user

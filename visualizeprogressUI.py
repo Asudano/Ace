@@ -1,3 +1,8 @@
+import matplotlib
+matplotlib.use('TkAgg')
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
+
 from tkinter import *
 from StatEnum import *
 
@@ -23,22 +28,35 @@ class VisualizeProgressUi(Frame):
 
     def visualize_f(self):
         """Creates a graph for character growth visualization
-
-        Creats a grapoh of the CharacterInstance's States over time vs.
+        
+        Creates a graph of the CharacterInstance's States over time vs.
         predicted States
         """
         master = self.master
         char_name = str(self.char_attribute[0].get())
         stat = str_to_stat(str(self.char_attribute[1].get()))
         char_inst = self.user_logs.get_char_instance(char_name)
-        (actual, expected) = self.user_logs.visualize_progress(char_inst, stat, self.game_data)
+        (actual, expected, levels) = self.user_logs.visualize_progress(char_inst, stat, self.game_data)
         for i in range(0,len(actual)):
             stat1 = Label(master, text=actual[i])
             stat1.grid(row=4+i, column=self.index, columnspan=1)
             self.components.append(stat1)
             stat2 = Label(master, text=expected[i])
-            stat2.grid(row=4+i, column=self.index +1, columnspan=2)
+            stat2.grid(row=4+i, column=self.index +1, columnspan=1)
             self.components.append(stat2)
+
+        f = Figure(figsize=(5,5), dpi=100)
+        a = f.add_subplot(111)
+        expected_line = a.plot(levels, expected, label="Predicted Values")
+        actual_line = a.plot(levels, actual, label="Real Values")
+
+        a.legend(loc=1)
+        
+        canvas = FigureCanvasTkAgg(f, master)
+        canvas.get_tk_widget().grid(row = 3, column = 0, rowspan=20,columnspan=self.index - 1, sticky= E+W)
+        self.components.append(canvas.get_tk_widget())
+        #canvas.show()
+        #canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand = True)
 
 
     def create_labels(self, character_name, gridN):
