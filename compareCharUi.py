@@ -1,8 +1,25 @@
+import matplotlib
+matplotlib.use('TkAgg')
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
+
 from tkinter import *
 from UserLogs import UserLogs
 from StatEnum import Stat
 from GameData import GameData
+from State import State
+import numpy as np
 
+def stat_array(state):
+	arr = ([state.get_stat_value(Stat.HP),
+		state.get_stat_value(Stat.Str),
+		state.get_stat_value(Stat.Mag),
+		state.get_stat_value(Stat.Skl),
+		state.get_stat_value(Stat.Spd),
+		state.get_stat_value(Stat.Lck),
+		state.get_stat_value(Stat.Def),
+		state.get_stat_value(Stat.Res)])
+	return arr
 
 class CompareCharUi(Frame):
 	"""Manages the UI for the character comparison screen.
@@ -57,6 +74,8 @@ class CompareCharUi(Frame):
 	def compare_f(self):
 		"""Shows the stats of two different characters for comparison
         """
+        # Are these CharacterInstance's
+        # TODO: Clean up naming in this function
 		name1 = self.user_logs.get_char_instance(
 			str(self.char_attribute[0].get()))
 		name2 = self.user_logs.get_char_instance(
@@ -92,7 +111,34 @@ class CompareCharUi(Frame):
 		self.create_labels(curr_state2.get_stat_value(Stat.Def), 11, 1)
 		# Res
 		self.create_labels(curr_state1.get_stat_value(Stat.Res), 12, 0)
-		self.create_labels(curr_state2.get_stat_value(Stat.Res), 12, 1)
+		self.create_labels(curr_state1.get_stat_value(Stat.Res), 12, 1)
+
+		num_stats = 8        
+		charname1 = name1.name
+		charname2 = name2.name
+
+		char1 = stat_array(curr_state1)
+		char2 = stat_array(curr_state2)
+
+		indices = range(num_stats)
+		width = np.min(np.diff(indices))/3
+          
+		f = Figure(figsize=(5,5), dpi=100)
+		a = f.add_subplot(111)
+          
+		rects1 = a.bar(indices-width, char1, width, color='b', label='Char1')
+		rects2 = a.bar(indices,  char2, width, color='r', label='Char2')
+          
+		a.set_ylabel('Stat Values')
+		a.set_title('Stats of {0} vs. {1}'.format(charname1, charname2))
+		a.set_xticks(indices)
+		a.set_xticklabels(('HP', 'Str', 'Mag', 'Skl', 'Spd', 'Lck', 'Def', 'Res'))
+		a.legend((rects1[0], rects2[0]), (charname1, charname2))
+          
+		canvas = FigureCanvasTkAgg(f, master)
+		canvas.get_tk_widget().grid(row = 3, column = 0, columnspan=6, rowspan=50)
+		self.components.append(canvas.get_tk_widget())
+        #canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand = True)
 
 	def create_widgets(self):
 		"""Creates display elements for update screen
