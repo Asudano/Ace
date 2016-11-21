@@ -137,6 +137,18 @@ class GameData(object):
 		"""
 		GameData.instance = GameData.__GameData(infile_name)
 
+
+	def get_local_variables(self):
+		"""Retrieves all local variables of the class
+
+		Args:
+
+		Returns:
+			An array of [__game_characters, __max_stas, __base_classes, __promoted_classes, __promotion_gains]
+		"""
+
+		return [self.instance.__game_characters, self.instance.__max_stats, self.instance.__base_classes, self.instance.__promoted_classes, self.instance.__promotion_gains]
+
 	def get_character_data(self, name):
 		"""Retrieves a CharacterData object with __name == name
 

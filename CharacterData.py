@@ -143,6 +143,9 @@ class CharacterData(object):
 	def get_base_stats(self):
 		return (self.__base_stats)[0].get_stats()
 
+	def get_base_value(self, stat):
+		return (self.__base_stats)[0].get_stat_value(stat)
+
 	def get_base_class(self):
 		return (self.__base_stats)[0].game_class
 		
