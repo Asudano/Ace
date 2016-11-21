@@ -83,29 +83,30 @@ class NewCharacterUi(Frame):
         char_inst = CharacterInstance(character_data, state)
         self.__user_logs.update_logs(char_inst)
 
-    def create_labels(self, character_name, gridN):
+    def create_labels(self, character_name, grid_n):
         """Creates a label for a UI element
 
         Args:
             character_name : str that specifies the name of the
                 character
-            gridN : int that specifies the row to create the label at
+            grid_n : int that specifies the row to create the label at
         """
         master = self.master
         char_name = Label(master, text=character_name)
-        char_name.grid(row=gridN, column=self.index, columnspan=1, sticky=E + W)
+        char_name.grid(row=grid_n, column=self.index, columnspan=1, 
+            sticky=E + W)
         self.components.append(char_name)
 
-    def create_text_box(self, attribute, gridN):
+    def create_text_box(self, attribute, grid_n):
         """Creates a text box element
 
 		Args:
 		    attribute : str that specifies the attribute for text box
-		    gridN : int that specifies the row to create the label at
+		    grid_n : int that specifies the row to create the label at
 		"""
         master = self.master
         textbox = Entry(master)
-        textbox.grid(row=gridN, column=self.index + 1, columnspan=1, sticky=E + W)
+        textbox.grid(row=grid_n, column=self.index + 1, columnspan=1, sticky=E + W)
         textbox.insert(0, attribute)
         self.__char_attribute.append(textbox)
         self.components.append(textbox)

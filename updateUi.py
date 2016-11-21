@@ -30,7 +30,8 @@ class UpdateUi(Frame):
         Updates an existing character with a new state given by then user
         """
         # 1. select character instance from UserLogs
-        char_instance = self.user_logs.get_char_instance(str(self.__char_attribute[0].get()))
+        char_instance = self.user_logs.get_char_instance(
+            str(self.__char_attribute[0].get()))
 
         for i in range(3,11):
             try:
@@ -54,7 +55,8 @@ class UpdateUi(Frame):
 
         # make sure class is valid for that character
         input_class = str(self.__char_attribute[1].get())
-        if(input_class not in char_instance.get_char_data().get_game_class_options()):
+        if(input_class not in 
+            char_instance.get_char_data().get_game_class_options()):
             return
 
         # make sure level is valid for class
@@ -75,31 +77,32 @@ class UpdateUi(Frame):
         # 4. Add character Instance to user logs
         self.user_logs.update_logs(char_instance)
 
-    def create_labels(self, character_name, grideN):
+    def create_labels(self, character_name, grid_n):
         """Creates a label for a UI element
 
         Args:
             character_name : str that specifies the name of the character
-            gridN : int that specifies the number of rows
+            grid_n : int that specifies the number of rows
         """
         master = self.master
         char_name = Label(master, text=character_name)
-        char_name.grid(row=grideN,
+        char_name.grid(row=grid_n,
                        column=self.index,
                        columnspan=1,
                        sticky=E + W)
         self.components.append(char_name)
 
-    def create_textbox(self, attribute, gridN):
+    def create_textbox(self, attribute, grid_n):
         """Creates a text box element
 
         Args:
             attribute : str that specifies the attribute for text box
-            gridN : int that specifies number of rows
+            grid_n : int that specifies number of rows
         """
         master = self.master
         textbox = Entry(master)
-        textbox.grid(row=gridN, column=self.index+1, columnspan=1, sticky=E + W)
+        textbox.grid(row=grid_n, column=self.index+1, columnspan=1, 
+            sticky=E + W)
         textbox.insert(0, attribute)
         self.__char_attribute.append(textbox)
         self.components.append(textbox)

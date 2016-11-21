@@ -8,8 +8,8 @@ from GameData import GameData
 from UserLogs import UserLogs
 
 
-class Application(Frame):
-    """Application manages the homescreen for the application
+class Homescreen(Frame):
+    """Manages the homescreen for the application
     """
 
     def __init__(self, master=None):
@@ -84,7 +84,8 @@ class Application(Frame):
         if self.app != False:
             self.app.end()
         root = self.master
-        self.app = VisualizeProgressUi(self.user_logs, self.game_data, master=root, index=7)
+        self.app = VisualizeProgressUi(self.user_logs, self.game_data, 
+            master=root, index=7)
         self.app.mainloop()
 
     def create_widgets(self):
@@ -124,5 +125,5 @@ if __name__ == "__main__":
     root = Tk()
     root.wm_title(string="Stat Manager")
     root.resizable(width=False, height=False)
-    app = Application(master=root)
+    app = Homescreen(master=root)
     app.mainloop()
