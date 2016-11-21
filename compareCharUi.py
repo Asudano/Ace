@@ -113,8 +113,8 @@ class CompareCharUi(Frame):
 		self.create_labels(curr_state1.get_stat_value(Stat.Res), 12, 1)
 
 		num_stats = 8        
-		charname1 = name1.name
-		charname2 = name2.name
+		charname1 = character_1.name
+		charname2 = character_2.name
 
 		char1 = stat_array(curr_state1)
 		char2 = stat_array(curr_state2)

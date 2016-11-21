@@ -48,7 +48,7 @@ class SuggestTeamUi(Frame):
         """Creates display elements
         """
         master = self.master
-        num_char = Label(master, text="Number of Charachters")
+        num_char = Label(master, text="Number of Characters")
         num_char.grid(row=0, column=self.index, columnspan=1, sticky=E + W)
 
         self.__num_char_inp.grid(
